@@ -217,7 +217,7 @@ function makeRecipeCard(recipe, showOwnerActions = false) {
     "background:#fffaf5;border:1px solid #eadbce;border-radius:14px;padding:16px;margin:12px 0;";
 
 const title = makeElement("h3", "", recipe.title);
-title.style.cssText = "font-family:'Dancing Script',cursive;font-size:36px;font-weight:700;line-height:1.3;color:#543b32;margin:0 0 14px;";
+title.style.cssText = "font-family:'Cormorant Garamond',Georgia,serif;font-size:44px;font-weight:600;letter-spacing:0.5px;line-height:1.2;color:#543b32;margin:0 0 14px;padding-bottom:10px;border-bottom:1px solid #d8c2ad;";
 card.appendChild(title);
 
   const details = makeElement(
