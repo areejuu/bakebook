@@ -3,26 +3,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BakeBook — A little book of lovely things</title>
-  <meta name="theme-color" content="#f6eee3">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7efe5">
+  <title>BakeBook — Your little recipe journal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --paper: #f8f0e5;
-      --paper-light: #fffaf2;
-      --ink: #44352f;
-      --muted: #88776e;
-      --rose: #bd7e88;
-      --rose-light: #f0d8d8;
-      --rose-pale: #f8eae6;
-      --green: #77836a;
-      --line: #dfcdb9;
-      --shadow: 0 12px 35px rgba(91, 65, 49, .09);
+      --paper: #f7efe5;
+      --white: #fffaf3;
+      --ink: #49372f;
+      --muted: #88766a;
+      --pink: #b97683;
+      --pink-pale: #f1dfe0;
+      --line: #e2d1bf;
+      --green: #75816a;
     }
 
     * { box-sizing: border-box; }
@@ -30,674 +26,477 @@
     body {
       margin: 0;
       color: var(--ink);
+      background:
+        radial-gradient(ellipse at 5% 10%, #ead8ce80, transparent 35%),
+        radial-gradient(ellipse at 95% 85%, #e8d9c980, transparent 30%),
+        repeating-linear-gradient(0deg, transparent 0 5px, #8b705008 6px),
+        var(--paper);
       font-family: "DM Sans", sans-serif;
-      background-color: var(--paper);
-      background-image:
-        radial-gradient(ellipse at 10% 15%, rgba(208, 159, 148, .14), transparent 35%),
-        radial-gradient(ellipse at 90% 80%, rgba(171, 157, 126, .13), transparent 32%),
-        repeating-linear-gradient(0deg, transparent, transparent 5px, rgba(112, 83, 59, .018) 6px);
       min-height: 100vh;
     }
 
     button, input, textarea, select { font: inherit; }
     button { cursor: pointer; }
+    a { color: inherit; }
 
-    button:focus-visible, input:focus-visible,
-    textarea:focus-visible, select:focus-visible {
-      outline: 2px solid var(--rose);
+    button:focus-visible, a:focus-visible,
+    input:focus-visible, textarea:focus-visible,
+    select:focus-visible {
+      outline: 2px solid var(--pink);
       outline-offset: 3px;
     }
 
-    .site-shell {
-      max-width: 1240px;
-      margin: auto;
-      padding: 24px 36px 50px;
-    }
+    .shell { max-width: 1180px; margin: auto; padding: 20px 30px 40px; }
+    .hidden { display: none !important; }
 
     .topline {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      gap: 16px;
-      padding-bottom: 14px;
+      gap: 12px;
+      padding-bottom: 13px;
       border-bottom: 1px solid var(--line);
       color: var(--muted);
       font-size: 10px;
+      letter-spacing: 1.7px;
+      text-transform: uppercase;
+    }
+
+    .masthead { text-align: center; padding: 25px 0 20px; }
+    .brand {
+      margin: 0;
+      font: 500 clamp(42px, 7vw, 68px)/1.1 "Playfair Display", Georgia, serif;
+      letter-spacing: -2px;
+    }
+    .brand span { color: var(--pink); font-style: italic; }
+    .tagline {
+      margin: 8px 0 0;
+      font: italic 14px "Playfair Display", Georgia, serif;
+      color: var(--muted);
+    }
+
+    .ornament { color: var(--pink); text-align: center; margin: 4px 0 25px; }
+
+    .auth-layout {
+      display: grid;
+      grid-template-columns: 1fr 390px;
+      align-items: center;
+      gap: 50px;
+      max-width: 900px;
+      margin: 0 auto 40px;
+    }
+
+    .intro { padding: 20px 0; }
+    .eyebrow {
+      color: var(--pink);
+      font-size: 10px;
+      font-weight: 700;
       letter-spacing: 2px;
       text-transform: uppercase;
     }
 
-    .topline-mark { color: var(--rose); font-size: 16px; }
+    h2, h3, h4 { font-family: "Playfair Display", Georgia, serif; font-weight: 500; }
+    .intro h2 { font-size: clamp(34px, 4vw, 48px); line-height: 1.2; margin: 13px 0; }
+    .intro h2 em { color: var(--pink); }
+    .intro p { max-width: 390px; color: var(--muted); font-size: 13px; line-height: 1.9; }
 
-    .masthead {
-      position: relative;
-      text-align: center;
-      padding: 35px 10px 27px;
-    }
+    .intro-list { list-style: none; padding: 0; margin-top: 25px; display: grid; gap: 12px; font-size: 12px; }
+    .intro-list li::before { content: "✿"; color: var(--pink); margin-right: 10px; }
 
-    .masthead-kicker {
-      color: var(--rose);
-      font-size: 10px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-
-    .brand {
-      font-family: "Playfair Display", Georgia, serif;
-      font-weight: 500;
-      font-size: clamp(49px, 8vw, 86px);
-      line-height: 1;
-      letter-spacing: -4px;
-      margin: 0;
-    }
-
-    .brand span { color: var(--rose); font-style: italic; }
-
-    .brand-subtitle {
-      font-family: "Playfair Display", Georgia, serif;
-      font-style: italic;
-      font-size: 16px;
-      color: var(--muted);
-      margin: 13px 0 0;
-    }
-
-    .flower {
-      position: absolute;
-      color: var(--rose);
-      font-size: 42px;
-      opacity: .8;
-      line-height: 1;
-    }
-
-    .flower-left { left: 9%; top: 48px; transform: rotate(-20deg); }
-    .flower-right { right: 9%; top: 47px; transform: rotate(17deg); }
-
-    .little-rule {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--rose);
-      font-size: 13px;
-      margin: 0 auto 30px;
-      max-width: 280px;
-    }
-
-    .little-rule::before, .little-rule::after {
-      content: "";
-      height: 1px;
-      background: var(--line);
-      flex: 1;
-    }
-
-    .hidden { display: none !important; }
-
-    /* Sign-in: a framed page from an old recipe notebook */
-
-    .auth-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(300px, .9fr);
-      gap: 42px;
-      align-items: center;
-      max-width: 920px;
-      margin: 8px auto 44px;
-    }
-
-    .welcome-note { padding: 12px 0 20px; }
-
-    .eyebrow {
-      font-size: 10px;
-      letter-spacing: 2.5px;
-      color: var(--rose);
-      text-transform: uppercase;
-      font-weight: 700;
-    }
-
-    .welcome-note h2 {
-      font: 500 clamp(32px, 4vw, 48px)/1.18 "Playfair Display", Georgia, serif;
-      margin: 14px 0;
-      letter-spacing: -1px;
-    }
-
-    .welcome-note h2 em { color: var(--rose); }
-
-    .welcome-note p {
-      color: var(--muted);
-      line-height: 1.9;
-      font-size: 13px;
-      max-width: 360px;
-    }
-
-    .little-list {
-      list-style: none;
-      padding: 0;
-      margin: 26px 0 0;
-      display: grid;
-      gap: 13px;
-      font-size: 12px;
-    }
-
-    .little-list li { display: flex; gap: 11px; align-items: center; }
-    .little-list span { color: var(--rose); font-size: 16px; }
-
-    .auth-paper {
-      position: relative;
-      padding: 34px 30px 30px;
-      background: var(--paper-light);
-      border: 1px solid #d8c4ad;
-      outline: 1px solid rgba(189, 126, 136, .38);
+    .paper {
+      background: var(--white);
+      border: 1px solid #d9c3ae;
+      outline: 1px solid #d9c3ae80;
       outline-offset: 5px;
-      box-shadow: var(--shadow);
-      transform: rotate(.5deg);
+      padding: 30px;
+      box-shadow: 0 12px 35px #63473512;
+      position: relative;
     }
 
-    .auth-paper::before, .auth-paper::after {
+    .paper::before {
       content: "✿";
       position: absolute;
-      color: var(--rose);
-      font-size: 20px;
+      top: 8px;
+      left: 10px;
+      color: var(--pink);
     }
 
-    .auth-paper::before { top: 10px; left: 12px; }
-    .auth-paper::after { bottom: 9px; right: 12px; }
+    .paper h2 { text-align: center; font-size: 28px; margin: 7px 0; }
+    .paper-note { text-align: center; color: var(--muted); font-size: 11px; margin: 0 0 20px; }
 
-    .paper-number {
-      text-align: center;
-      color: var(--rose);
-      font: italic 13px "Playfair Display", Georgia, serif;
-      margin-bottom: 8px;
-    }
+    .auth-tabs { display: flex; border-bottom: 1px solid var(--line); margin-bottom: 20px; }
+    .auth-tabs button { flex: 1; padding: 11px 5px; background: transparent; border: 0; color: var(--muted); font-size: 12px; }
+    .auth-tabs button.active { border-bottom: 2px solid var(--pink); color: var(--ink); font-weight: 700; }
 
-    .auth-paper h2 {
-      text-align: center;
-      font: 500 28px "Playfair Display", Georgia, serif;
-      margin: 0 0 7px;
-    }
-
-    .auth-intro {
-      text-align: center;
-      color: var(--muted);
-      font-size: 11px;
-      margin: 0 0 24px;
-    }
-
-    .auth-tabs {
-      display: flex;
-      border-bottom: 1px solid var(--line);
-      margin-bottom: 21px;
-    }
-
-    .auth-tabs button {
-      flex: 1;
-      border: 0;
-      background: transparent;
-      padding: 11px 6px;
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .auth-tabs button.active {
-      color: var(--ink);
-      border-bottom: 2px solid var(--rose);
-      font-weight: 700;
-    }
-
-    .field { margin-bottom: 16px; }
-
-    .field label {
-      display: block;
-      font-size: 11px;
-      margin-bottom: 7px;
-      color: #68564d;
-    }
-
-    .field input, .field textarea, .field select,
-    .search-input {
+    .field { margin-bottom: 15px; min-width: 0; }
+    .field label { display: block; margin-bottom: 7px; font-size: 11px; }
+    .field input, .field textarea, .field select, .search-input {
       width: 100%;
+      min-width: 0;
       border: 1px solid var(--line);
-      border-radius: 2px;
-      background: #fffdf8;
-      color: var(--ink);
+      border-radius: 3px;
+      background: #fffdf9;
       padding: 12px;
+      color: var(--ink);
       font-size: 12px;
     }
 
     .field textarea { resize: vertical; line-height: 1.7; }
+    .field input::placeholder, .field textarea::placeholder { color: #b5a59a; }
 
-    .field input::placeholder, .field textarea::placeholder {
-      color: #b5a69a;
-    }
-
-    .primary-button {
-      width: 100%;
+    .primary {
       border: 0;
-      background: var(--rose);
+      background: var(--pink);
       color: white;
-      padding: 13px 16px;
+      padding: 13px 17px;
       font-size: 11px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      transition: background .2s, transform .2s;
+      letter-spacing: .7px;
+      transition: background .2s;
     }
+    .primary:hover { background: #a46673; }
+    .full { width: 100%; }
 
-    .primary-button:hover { background: #a96c77; transform: translateY(-1px); }
-
-    .message {
-      font-size: 12px;
-      line-height: 1.7;
-      color: var(--green);
-      margin-top: 12px;
-      overflow-wrap: anywhere;
-    }
-
+    .message { color: var(--green); font-size: 12px; line-height: 1.6; overflow-wrap: anywhere; }
     .message:empty { display: none; }
+    .small-note { text-align: center; font: italic 12px "Playfair Display", Georgia, serif; color: var(--muted); margin: 18px 0 0; }
 
-    .tiny-note {
-      text-align: center;
-      font: italic 12px "Playfair Display", Georgia, serif;
-      color: var(--muted);
-      margin: 19px 0 0;
-    }
+    /* Signed-in homepage */
 
-    /* Signed-in cookbook */
-
-    .journal-top {
+    .home-welcome {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      gap: 18px;
-      flex-wrap: wrap;
-      padding: 18px 0;
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      margin-bottom: 28px;
-    }
-
-    .journal-top h2 {
-      font: 500 29px "Playfair Display", Georgia, serif;
-      margin: 0;
-    }
-
-    .journal-top p {
-      font-size: 12px;
-      color: var(--muted);
-      margin: 5px 0 0;
-    }
-
-    .signout-button {
-      background: transparent;
-      color: var(--muted);
-      border: 1px solid var(--line);
-      padding: 9px 13px;
-      font-size: 11px;
-    }
-
-    .journal-grid {
-      display: grid;
-      grid-template-columns: 210px minmax(0, 1fr);
-      gap: 28px;
-      align-items: start;
-    }
-
-    .side-note {
-      background: #f0dfd7;
-      padding: 22px 18px;
-      border-radius: 2px 2px 22px 2px;
-      transform: rotate(-1deg);
-      position: relative;
-    }
-
-    .side-note::before {
-      content: "";
-      position: absolute;
-      top: -8px;
-      left: 35%;
-      width: 70px;
-      height: 19px;
-      background: rgba(189, 126, 136, .42);
-      transform: rotate(-3deg);
-    }
-
-    .side-note h3 {
-      font: italic 21px "Playfair Display", Georgia, serif;
-      margin: 4px 0 16px;
-    }
-
-    .side-nav { display: grid; gap: 4px; }
-
-    .side-nav a {
-      color: #65524a;
-      text-decoration: none;
-      font-size: 12px;
-      padding: 10px 6px;
-      border-bottom: 1px dashed rgba(110, 81, 65, .2);
-    }
-
-    .side-nav a:hover { color: #a45f6c; }
-
-    .side-note .side-quote {
-      font: italic 14px/1.7 "Playfair Display", Georgia, serif;
-      color: #80655b;
-      margin: 22px 0 0;
-    }
-
-    .content-stack { display: grid; gap: 26px; min-width: 0; }
-
-    .section-heading {
-      display: flex;
-      align-items: end;
       justify-content: space-between;
-      gap: 12px;
-      border-bottom: 1px solid var(--line);
-      padding-bottom: 10px;
-      margin-bottom: 16px;
+      gap: 25px;
+      background: #eddbd5;
+      padding: clamp(24px, 5vw, 48px);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 27px;
     }
 
-    .section-heading h3 {
-      font: 500 25px "Playfair Display", Georgia, serif;
-      margin: 0;
+    .home-welcome::after {
+      content: "❀";
+      position: absolute;
+      right: 28px;
+      bottom: -42px;
+      font-size: 150px;
+      color: #b9768320;
+      pointer-events: none;
     }
 
-    .section-heading span {
-      color: var(--rose);
-      font: italic 12px "Playfair Display", Georgia, serif;
-    }
+    .welcome-copy { position: relative; z-index: 1; }
+    .welcome-copy h2 { font-size: clamp(32px, 4vw, 46px); line-height: 1.15; margin: 12px 0; }
+    .welcome-copy h2 em { color: #a66674; }
+    .welcome-copy p { max-width: 490px; color: #776259; font-size: 12px; line-height: 1.9; }
 
-    .recipe-paper {
-      background: rgba(255, 250, 242, .88);
-      border: 1px solid var(--line);
-      padding: 24px;
-      box-shadow: 4px 5px 0 rgba(205, 178, 154, .18);
-    }
-
-    .recipe-paper .field-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-
-    .recipe-paper .field-grid .field { min-width: 0; }
-
-    .visibility-note {
+    .welcome-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
+    .secondary {
+      border: 1px solid #d2b6ae;
+      background: #fff8f0;
+      color: #6e5149;
+      padding: 12px 15px;
       font-size: 11px;
-      color: var(--muted);
-      line-height: 1.7;
-      margin: -2px 0 17px;
     }
 
-    .search-row {
+    .welcome-decoration { flex: 0 0 145px; text-align: center; font-size: 88px; color: var(--pink); transform: rotate(-8deg); }
+
+    .home-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 0 0 28px; }
+    .home-tile {
       display: flex;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+      min-height: 105px;
+      padding: 20px;
+      text-align: left;
+      border: 1px solid var(--line);
+      background: #fffaf3d9;
+      color: var(--ink);
+      transition: transform .2s, border-color .2s;
+    }
+    .home-tile:hover { transform: translateY(-2px); border-color: var(--pink); }
+    .tile-icon { display: grid; place-items: center; flex: 0 0 48px; height: 48px; background: var(--pink-pale); border-radius: 50%; color: #a66674; font-size: 23px; }
+    .tile-copy { flex: 1; }
+    .tile-copy strong { display: block; font: 500 21px "Playfair Display", Georgia, serif; }
+    .tile-copy small { display: block; margin-top: 6px; color: var(--muted); font-size: 11px; line-height: 1.5; }
+    .tile-arrow { color: var(--pink); }
+
+    .section-head { display: flex; justify-content: space-between; align-items: end; gap: 12px; margin-bottom: 15px; }
+    .section-head h3 { margin: 0; font-size: 27px; }
+    .section-head p { color: var(--muted); font-size: 11px; margin: 6px 0 0; }
+    .text-button { border: 0; background: transparent; color: #a66674; font-size: 11px; padding: 8px 0; }
+
+    .preview-panel { padding: 22px; border: 1px solid var(--line); background: #fffaf3b8; margin-bottom: 26px; }
+    .preview-placeholder { text-align: center; padding: 25px 12px; color: var(--muted); font: italic 15px/1.8 "Playfair Display", Georgia, serif; }
+    .preview-placeholder span { display: block; color: var(--pink); font-size: 26px; }
+
+    /* App views */
+
+    .app-nav {
+      display: flex;
+      align-items: center;
       gap: 8px;
-      margin-bottom: 17px;
-    }
-
-    .search-row .search-input { flex: 1; min-width: 0; }
-
-    .secondary-button {
-      background: #e9d8d0;
-      color: #654b45;
-      border: 1px solid #d8beb5;
-      padding: 10px 15px;
-      font-size: 11px;
-    }
-
-    .secondary-button:hover { background: #dfc4c0; }
-
-    .recipe-list {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 15px;
-    }
-
-    .empty-note {
-      border: 1px dashed #d8c4ad;
-      padding: 28px 16px;
-      text-align: center;
-      color: var(--muted);
-      font: italic 15px/1.8 "Playfair Display", Georgia, serif;
-      grid-column: 1 / -1;
-    }
-
-    .empty-note span { display: block; font-size: 25px; margin-bottom: 8px; }
-
-    .site-footer {
-      text-align: center;
-      padding-top: 35px;
-      margin-top: 35px;
+      flex-wrap: wrap;
+      padding: 12px 0;
+      margin-bottom: 25px;
       border-top: 1px solid var(--line);
-      color: var(--muted);
-      font: italic 13px "Playfair Display", Georgia, serif;
+      border-bottom: 1px solid var(--line);
     }
+    .nav-button { border: 0; background: transparent; color: var(--muted); padding: 10px 13px; font-size: 11px; }
+    .nav-button.active, .nav-button:hover { color: #a66674; background: #f0dfe0a8; }
+    .nav-spacer { flex: 1; }
+    .signout-button { background: transparent; border: 1px solid var(--line); color: var(--muted); padding: 9px 12px; font-size: 11px; }
+
+    .view { display: none; }
+    .view.active { display: block; }
+
+    .form-paper { background: #fffaf3d9; border: 1px solid var(--line); padding: 24px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .hint { color: var(--muted); font-size: 11px; line-height: 1.7; }
+    .filter-bar { display: grid; grid-template-columns: minmax(160px, 1fr) repeat(3, minmax(110px, 160px)); gap: 9px; margin: 18px 0; }
+    .filter-bar input, .filter-bar select { width: 100%; border: 1px solid var(--line); background: var(--white); padding: 11px; color: var(--ink); font-size: 11px; }
+    .recipe-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 15px; }
+    .empty-note { grid-column: 1 / -1; border: 1px dashed #d8c4ad; padding: 30px 15px; text-align: center; color: var(--muted); font: italic 15px/1.8 "Playfair Display", Georgia, serif; }
+    .empty-note span { display: block; color: var(--pink); font-size: 26px; }
+
+    .footer { text-align: center; border-top: 1px solid var(--line); padding-top: 24px; margin-top: 38px; color: var(--muted); font: italic 13px "Playfair Display", Georgia, serif; }
 
     @media (max-width: 760px) {
-      .site-shell { padding: 17px 18px 35px; }
-      .flower { font-size: 29px; }
-      .flower-left { left: 1%; }
-      .flower-right { right: 1%; }
-      .auth-layout { grid-template-columns: 1fr; gap: 18px; max-width: 440px; }
-      .welcome-note { text-align: center; padding: 5px 0; }
-      .welcome-note p { margin-left: auto; margin-right: auto; }
-      .little-list { max-width: 270px; margin-left: auto; margin-right: auto; text-align: left; }
-      .auth-paper { transform: none; }
-      .journal-grid { grid-template-columns: 1fr; }
-      .side-note { transform: none; }
-      .side-nav { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      .side-nav a { text-align: center; }
+      .shell { padding: 16px 17px 30px; }
+      .auth-layout { grid-template-columns: 1fr; gap: 18px; max-width: 450px; }
+      .intro { text-align: center; padding: 0; }
+      .intro p { margin-left: auto; margin-right: auto; }
+      .intro-list { text-align: left; max-width: 290px; margin-left: auto; margin-right: auto; }
+      .welcome-decoration { display: none; }
+      .home-welcome { padding: 25px 20px; }
+      .filter-bar { grid-template-columns: 1fr 1fr; }
+      .recipe-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
-    @media (max-width: 450px) {
-      .topline { font-size: 8px; letter-spacing: 1px; }
-      .brand { letter-spacing: -2px; }
-      .recipe-paper { padding: 16px; }
-      .recipe-paper .field-grid, .recipe-list { grid-template-columns: 1fr; }
-      .search-row { flex-wrap: wrap; }
-      .search-row .secondary-button { flex: 1; }
-      .journal-top h2 { font-size: 25px; }
+    @media (max-width: 460px) {
+      .topline { font-size: 8px; letter-spacing: .7px; }
+      .paper { padding: 25px 20px; }
+      .home-grid, .form-grid, .recipe-list { grid-template-columns: 1fr; }
+      .home-tile { min-height: 85px; }
+      .section-head h3 { font-size: 23px; }
+      .nav-spacer { display: none; }
+      .filter-bar { grid-template-columns: 1fr; }
+      .app-nav { gap: 2px; }
+      .nav-button { padding: 9px 8px; }
     }
   </style>
 </head>
 
 <body>
-  <div class="site-shell">
-
+  <div class="shell">
     <div class="topline">
-      <span>✳ A journal for the things we bake ✳</span>
-      <span class="topline-mark">Made with a little love ♡</span>
+      <span>A little something sweet for your everyday ♡</span>
+      <span>Made with love · Est. BakeBook</span>
     </div>
 
     <header class="masthead">
-      <span class="flower flower-left" aria-hidden="true">❀</span>
-      <span class="flower flower-right" aria-hidden="true">✿</span>
-      <div class="masthead-kicker">Gather · Bake · Remember</div>
-      <h1 class="brand">Bake<span>Book</span></h1>
-      <p class="brand-subtitle">A little book of lovely things.</p>
+      <h1 class="brand">BakeBook<span>Recipes</span></h1>
+      <p class="tagline">A little book of lovely things.</p>
     </header>
+    <div class="ornament" aria-hidden="true">— ✿ ❧ ✿ —</div>
 
-    <div class="little-rule" aria-hidden="true">✿ &nbsp; ❧ &nbsp; ✿</div>
-
-    <!-- Sign in / sign up -->
     <section id="auth-section">
       <div class="auth-layout">
-
-        <div class="welcome-note">
-          <div class="eyebrow">Your kitchen, in pages</div>
-          <h2>Some things are<br>too lovely to <em>forget.</em></h2>
-          <p>
-            Keep the recipes you love, the little changes that make them yours,
-            and the bakes you want to remember. Your own corner of the kitchen,
-            gathered in one place.
-          </p>
-
-          <ul class="little-list">
-            <li><span>♡</span> Keep your treasured recipes together</li>
-            <li><span>❀</span> Add photographs from your kitchen</li>
-            <li><span>✧</span> Discover recipes shared by other bakers</li>
+        <div class="intro">
+          <div class="eyebrow">Your kitchen, your stories</div>
+          <h2>Good recipes<br>are made to be <em>kept.</em></h2>
+          <p>Save the recipes you love, remember your little kitchen experiments, and find inspiration from other home bakers.</p>
+          <ul class="intro-list">
+            <li>Keep your recipes in one place</li>
+            <li>Add photos of your bakes</li>
+            <li>Share your favourites with the community</li>
           </ul>
         </div>
 
-        <div class="auth-paper">
-          <div class="paper-number">A fresh page, just for you</div>
-          <h2>Come on in</h2>
-          <p class="auth-intro">Your recipe journal is waiting.</p>
+        <div class="paper">
+          <h2>Your pages are waiting</h2>
+          <p class="paper-note">Sign in to open your personal recipe journal.</p>
 
           <div class="auth-tabs">
             <button type="button" id="signin-tab" class="active">Sign in</button>
-            <button type="button" id="signup-tab">Create an account</button>
+            <button type="button" id="signup-tab">Create account</button>
           </div>
 
           <form id="auth-form">
             <div class="field">
               <label for="email">Email address</label>
-              <input type="email" id="email" placeholder="you@example.com" required autocomplete="email">
+              <input id="email" type="email" placeholder="you@example.com" autocomplete="email" required>
             </div>
-
             <div class="field">
               <label for="password">Password</label>
-              <input type="password" id="password" placeholder="At least 8 characters" required autocomplete="current-password">
+              <input id="password" type="password" placeholder="At least 8 characters" autocomplete="current-password" required>
             </div>
-
-            <p id="password-help" class="visibility-note hidden">
-              Use at least 8 characters, including an uppercase letter,
-              a lowercase letter, and a number.
-            </p>
-
-            <button type="submit" id="submit-button" class="primary-button">Open my journal &nbsp; →</button>
+            <p id="password-help" class="hint hidden">Use at least 8 characters, including an uppercase letter, a lowercase letter and a number.</p>
+            <button type="submit" id="submit-button" class="primary full">Open my journal ♡</button>
             <p id="auth-message" class="message" role="status" aria-live="polite"></p>
           </form>
-
-          <p class="tiny-note">There's always room for one more recipe ♡</p>
+          <p class="small-note">There's always room for one more recipe.</p>
         </div>
-
       </div>
     </section>
 
-    <!-- Signed-in journal -->
     <section id="signed-in-section" class="hidden">
-      <div class="journal-top">
-        <div>
-          <div class="eyebrow">Welcome to your kitchen</div>
-          <h2>Your personal recipe journal</h2>
-          <p>Your personal recipe journal, all in one place.</p>
-          <p id="welcome-message"></p>
-        </div>
-        <button id="signout-button" class="signout-button" type="button">Sign out ↗</button>
-      </div>
+      <nav class="app-nav" aria-label="Main navigation">
+        <button type="button" class="nav-button active" data-view="home-view">⌂ Home</button>
+        <button type="button" class="nav-button" data-view="my-recipes-view">♡ My recipes</button>
+        <button type="button" class="nav-button" data-view="add-recipe-view">＋ Add a recipe</button>
+        <button type="button" class="nav-button" data-view="explore-view">✿ Explore</button>
+        <span class="nav-spacer"></span>
+        <button type="button" id="signout-button" class="signout-button">Sign out ↗</button>
+      </nav>
 
       <p id="session-message" class="message" role="status" aria-live="polite"></p>
 
-      <div class="journal-grid">
-        <aside class="side-note">
-          <div class="eyebrow">The little index</div>
-          <h3>In this journal…</h3>
-          <nav class="side-nav" aria-label="Journal sections">
-            <a href="#my-recipes">♡ My recipes</a>
-            <a href="#add-recipe">✿ Add a recipe</a>
-            <a href="#public-recipes">✧ Community</a>
-          </nav>
-          <p class="side-quote">“A pinch of this, a little of that, and something wonderful.”</p>
-          <p style="text-align:right;color:#a96c77;font-size:12px;">— kitchen notes</p>
-        </aside>
-
-        <div class="content-stack">
-
-          <section id="add-recipe">
-            <div class="section-heading">
-              <h3>Put something in the oven</h3>
-              <span>New recipe ♡</span>
+      <div id="home-view" class="view active">
+        <section class="home-welcome">
+          <div class="welcome-copy">
+            <div class="eyebrow">Welcome to your kitchen</div>
+            <h2 id="welcome-heading">Your kitchen,<br>your <em>stories.</em></h2>
+            <p id="welcome-message">Your personal recipe journal, all in one place.</p>
+            <div class="welcome-actions">
+              <button type="button" class="primary" data-view="add-recipe-view">＋ Add a recipe</button>
+              <button type="button" class="secondary" data-view="my-recipes-view">Browse my recipes →</button>
             </div>
+          </div>
+          <div class="welcome-decoration" aria-hidden="true">❀</div>
+        </section>
 
-            <form id="recipe-form" class="recipe-paper">
-              <div class="field">
-                <label for="recipe-title">What are we making?</label>
-                <input type="text" id="recipe-title" placeholder="Grandma's vanilla cake…" required>
-              </div>
-
-              <div class="field-grid">
-                <div class="field">
-                  <label for="prep-time">Preparation time (minutes)</label>
-                  <input type="number" id="prep-time" min="0" placeholder="20">
-                </div>
-                <div class="field">
-                  <label for="bake-time">Baking time (minutes)</label>
-                  <input type="number" id="bake-time" min="0" placeholder="35">
-                </div>
-              </div>
-
-              <div class="field">
-                <label for="ingredients">Ingredients</label>
-                <textarea id="ingredients" rows="5" placeholder="200 g flour&#10;100 g butter&#10;A little vanilla…" required></textarea>
-              </div>
-
-              <div class="field">
-                <label for="instructions">Method</label>
-                <textarea id="instructions" rows="5" placeholder="Write down each step, just as you like it…" required></textarea>
-              </div>
-
-              <div class="field">
-                <label for="recipe-photo">A little photograph (optional)</label>
-                <input type="file" id="recipe-photo" accept="image/jpeg,image/png,image/webp">
-                <p class="visibility-note">JPG, PNG or WEBP · Up to 5 MB</p>
-              </div>
-
-              <div class="field">
-                <label for="recipe-visibility">Keep this recipe…</label>
-                <select id="recipe-visibility">
-                  <option value="private">Just for me · Private</option>
-                  <option value="public">Share with the community · Public</option>
-                </select>
-              </div>
-
-              <button type="submit" id="save-recipe-button" class="primary-button">Save to my cookbook &nbsp; ♡</button>
-              <p id="recipe-message" class="message" role="status" aria-live="polite"></p>
-            </form>
-          </section>
-
-          <section id="my-recipes">
-            <div class="section-heading">
-              <h3>My recipe collection</h3>
-              <span>Kept with love</span>
-            </div>
-
-            <div class="search-row">
-              <input type="search" id="recipe-search" class="search-input" placeholder="Find a recipe in your journal…">
-              <button type="button" id="search-button" class="secondary-button">Search</button>
-            </div>
-
-            <div id="recipe-list" class="recipe-list">
-              <div class="empty-note">
-                <span>♡</span>
-                Your recipe pages will live here.<br>
-                Save your first recipe to begin.
-              </div>
-            </div>
-          </section>
-
-          <section id="public-recipes">
-            <div class="section-heading">
-              <h3>From other kitchens</h3>
-              <span>A shared table ✿</span>
-            </div>
-
-            <div id="public-recipe-list" class="recipe-list">
-              <div class="empty-note">
-                <span>❀</span>
-                Good things are meant to be shared.<br>
-                Public recipes from other bakers will appear here.
-              </div>
-            </div>
-          </section>
-
+        <div class="home-grid">
+          <button type="button" class="home-tile" data-view="my-recipes-view">
+            <span class="tile-icon">♡</span>
+            <span class="tile-copy"><strong>My recipes</strong><small>Your own collection of tried-and-loved recipes.</small></span>
+            <span class="tile-arrow">↗</span>
+          </button>
+          <button type="button" class="home-tile" data-view="explore-view">
+            <span class="tile-icon">✿</span>
+            <span class="tile-copy"><strong>Explore</strong><small>Discover recipes shared by other bakers.</small></span>
+            <span class="tile-arrow">↗</span>
+          </button>
         </div>
+
+        <section>
+          <div class="section-head">
+            <div><h3>Recently collected</h3><p>Your latest additions, all together.</p></div>
+            <button type="button" class="text-button" data-view="my-recipes-view">View all →</button>
+          </div>
+          <div id="home-recipe-list" class="preview-panel">
+            <div class="preview-placeholder"><span>♡</span>Your recipe pages will appear here once you save your first recipe.</div>
+          </div>
+        </section>
       </div>
+
+      <section id="add-recipe-view" class="view">
+        <div class="section-head">
+          <div><div class="eyebrow">A fresh page</div><h3>Add a recipe</h3><p>Keep the ingredients and little details you'll want to remember.</p></div>
+        </div>
+        <form id="recipe-form" class="form-paper">
+          <div class="field">
+            <label for="recipe-title">Recipe name</label>
+            <input id="recipe-title" type="text" placeholder="Your favourite chocolate cake…" required>
+          </div>
+          <div class="form-grid">
+            <div class="field"><label for="prep-time">Prep time (minutes)</label><input id="prep-time" type="number" min="0" placeholder="20"></div>
+            <div class="field"><label for="bake-time">Bake time (minutes)</label><input id="bake-time" type="number" min="0" placeholder="35"></div>
+          </div>
+          <div class="field"><label for="ingredients">Ingredients</label><textarea id="ingredients" rows="5" placeholder="One ingredient per line…" required></textarea></div>
+          <div class="field"><label for="instructions">Instructions</label><textarea id="instructions" rows="6" placeholder="Write each step in order…" required></textarea></div>
+          <div class="field">
+            <label for="recipe-photo">Photo of your bake (optional)</label>
+            <input id="recipe-photo" type="file" accept="image/jpeg,image/png,image/webp">
+            <p class="hint">JPG, PNG or WEBP · Maximum 5 MB</p>
+          </div>
+          <div class="field">
+            <label for="recipe-visibility">Who can see this recipe?</label>
+            <select id="recipe-visibility">
+              <option value="private">♡ Just me — private</option>
+              <option value="public">✿ Share with the community — public</option>
+            </select>
+            <p class="hint">Your recipes stay private unless you choose to share them.</p>
+          </div>
+          <button type="submit" id="save-recipe-button" class="primary">Save to my book ♡</button>
+          <p id="recipe-message" class="message" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section id="my-recipes-view" class="view">
+        <div class="section-head">
+          <div><div class="eyebrow">Collected with love</div><h3>My recipes</h3><p>Search, sort and filter your personal collection.</p></div>
+        </div>
+        <div class="filter-bar">
+          <input id="recipe-search" type="search" placeholder="Search names or ingredients…" aria-label="Search recipes">
+          <select id="visibility-filter" aria-label="Filter by visibility">
+            <option value="all">All recipes</option>
+            <option value="private">Private only</option>
+            <option value="public">Public only</option>
+          </select>
+          <select id="recipe-sort" aria-label="Sort recipes">
+            <option value="newest">Newest first</option>
+            <option value="oldest">Oldest first</option>
+            <option value="az">Name A–Z</option>
+            <option value="za">Name Z–A</option>
+          </select>
+          <select id="prep-filter" aria-label="Filter by preparation time">
+            <option value="all">Any prep time</option>
+            <option value="15">15 min or less</option>
+            <option value="30">30 min or less</option>
+            <option value="60">60 min or less</option>
+          </select>
+        </div>
+        <div id="recipe-list" class="recipe-list">
+          <div class="empty-note"><span>♡</span>Your recipe pages will appear here.</div>
+        </div>
+      </section>
+
+      <section id="explore-view" class="view">
+        <div class="section-head">
+          <div><div class="eyebrow">A shared table</div><h3>From other kitchens</h3><p>Discover something lovely from the BakeBook community.</p></div>
+        </div>
+        <div class="filter-bar">
+          <input id="public-recipe-search" type="search" placeholder="Search community recipes…" aria-label="Search community recipes">
+          <select id="public-recipe-sort" aria-label="Sort community recipes">
+            <option value="newest">Newest first</option>
+            <option value="az">Name A–Z</option>
+            <option value="za">Name Z–A</option>
+          </select>
+        </div>
+        <div id="public-recipe-list" class="recipe-list">
+          <div class="empty-note"><span>✿</span>Public recipes shared by other bakers will appear here.</div>
+        </div>
+      </section>
     </section>
 
-    <footer class="site-footer">
-      Baked slowly, kept dearly. &nbsp; ✿ &nbsp; BakeBook
-    </footer>
+    <footer class="footer">Made slowly, shared happily ♡ one recipe at a time.</footer>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="config.js"></script>
   <script src="app.js"></script>
+  <script>
+    // Navigation between the homepage and the journal sections.
+    document.addEventListener("click", function (event) {
+      const button = event.target.closest("[data-view]");
+      if (!button) return;
+
+      const targetId = button.getAttribute("data-view");
+      const target = document.getElementById(targetId);
+      const signedIn = document.getElementById("signed-in-section");
+
+      if (!target || !signedIn || signedIn.classList.contains("hidden")) return;
+
+      signedIn.querySelectorAll(".view").forEach(function (view) {
+        view.classList.toggle("active", view.id === targetId);
+      });
+
+      signedIn.querySelectorAll(".nav-button").forEach(function (navButton) {
+        navButton.classList.toggle("active", navButton.getAttribute("data-view") === targetId);
+      });
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  </script>
 </body>
 </html>
