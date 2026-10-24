@@ -358,8 +358,8 @@ function renderMyRecipes() {
     const prep = Number(recipe.prep_time) || 0;
     const matchesPrep =
       prepFilter === "all" ||
-      (prepFilter === "quick" && prep <= 20) ||
-      (prepFilter === "long" && prep > 20);
+      (prepFilter === "quick" && prep <= 30) ||
+      (prepFilter === "long" && prep > 30);
 
     return matchesSearch && matchesVisibility && matchesPrep;
   });
