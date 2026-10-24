@@ -248,11 +248,19 @@ card.appendChild(title);
     card.appendChild(image);
   }
 
-  card.appendChild(makeElement("h4", "", "Ingredients"));
-  card.appendChild(makeElement("p", "", recipe.ingredients || "No ingredients added."));
+  const ingredientsHeading = makeElement("h4", "", "Ingredients");
+ingredientsHeading.style.cssText = "font-family:'Crimson Text',Georgia,serif;font-size:22px;font-weight:700;color:#543b32;margin:20px 0 8px;";
+card.appendChild(ingredientsHeading);
+const ingredientsText = makeElement("p", "", recipe.ingredients || "No ingredients added.");
+ingredientsText.style.cssText = "font-family:'Crimson Text',Georgia,serif;font-size:17px;line-height:1.8;color:#594b43;white-space:pre-line;";
+card.appendChild(ingredientsText);
 
-  card.appendChild(makeElement("h4", "", "Instructions"));
-  card.appendChild(makeElement("p", "", recipe.instructions || "No instructions added."));
+const instructionsHeading = makeElement("h4", "", "Instructions");
+instructionsHeading.style.cssText = "font-family:'Crimson Text',Georgia,serif;font-size:22px;font-weight:700;color:#543b32;margin:20px 0 8px;";
+card.appendChild(instructionsHeading);
+const instructionsText = makeElement("p", "", recipe.instructions || "No instructions added.");
+instructionsText.style.cssText = "font-family:'Crimson Text',Georgia,serif;font-size:17px;line-height:1.8;color:#594b43;white-space:pre-line;";
+card.appendChild(instructionsText);
 
   if (showOwnerActions) {
     const actions = makeElement("div", "recipe-actions");
