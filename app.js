@@ -356,10 +356,11 @@ function renderMyRecipes() {
       visibility === "all" || recipe.visibility === visibility;
 
     const prep = Number(recipe.prep_time) || 0;
-    const matchesPrep =
-      prepFilter === "all" ||
-      (prepFilter === "quick" && prep <= 30) ||
-      (prepFilter === "long" && prep > 30);
+ const matchesPrep =
+  prepFilter === "all" ||
+  (prepFilter === "15" && prep <= 15) ||
+  (prepFilter === "30" && prep <= 30) ||
+  (prepFilter === "60" && prep <= 60);
 
     return matchesSearch && matchesVisibility && matchesPrep;
   });
