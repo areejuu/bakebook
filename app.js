@@ -345,7 +345,7 @@ function renderMyRecipes() {
   const search = ($("recipe-search")?.value || "").trim().toLowerCase();
   const visibility = $("visibility-filter")?.value || "all";
   const sort = $("recipe-sort")?.value || "newest";
-  const prepFilter = $("prep-filter")?.value || "all";
+const prepFilter = String($("prep-filter")?.value || "all");
 
   let recipes = currentRecipes.filter((recipe) => {
     const matchesSearch =
