@@ -20,170 +20,142 @@ const sessionMessage = document.getElementById("session-message");
 
 let isSigningUp = false;
 let currentUser = null;
-let profilePanel = null;
 let profileRequestNumber = 0;
+let profilePanel = null;
 
 function showMessage(element, message, isError = false) {
+  if (!element) return;
   element.textContent = message;
   element.style.color = isError ? "#b42318" : "#356b43";
 }
 
-function setLoading(isLoading) {
-  submitButton.disabled = isLoading;
-  signinTab.disabled = isLoading;
-  signupTab.disabled = isLoading;
-
-  if (isLoading) {
-    submitButton.textContent = "Please wait...";
-  } else {
-    submitButton.textContent = isSigningUp
-      ? "Create account"
-      : "Sign in";
-  }
-}
-
 function switchMode(signingUp) {
   isSigningUp = signingUp;
-
   signinTab.classList.toggle("active", !signingUp);
   signupTab.classList.toggle("active", signingUp);
   passwordHelp.classList.toggle("hidden", !signingUp);
-
-  passwordInput.autocomplete = signingUp
-    ? "new-password"
-    : "current-password";
-
+  passwordInput.autocomplete = signingUp ? "new-password" : "current-password";
   passwordInput.minLength = signingUp ? 8 : 1;
   submitButton.textContent = signingUp ? "Create account" : "Sign in";
   authMessage.textContent = "";
 }
 
-function createProfilePanel() {
-  if (profilePanel) return profilePanel;
+function showSignedOut() {
+  currentUser = null;
+  profileRequestNumber++;
 
-  profilePanel = document.createElement("div");
-  profilePanel.style.margin = "20px 0";
-  profilePanel.style.padding = "16px";
-  profilePanel.style.borderRadius = "12px";
-  profilePanel.style.background = "#fff8f1";
+  signedInSection.classList.add("hidden");
+  authSection.classList.remove("hidden");
+  passwordInput.value = "";
+  sessionMessage.textContent = "";
+
+  if (profilePanel) {
+    profilePanel.remove();
+    profilePanel = null;
+  }
+}
+
+function showSignedIn(user) {
+  currentUser = user;
+  const requestNumber = ++profileRequestNumber;
+
+  authSection.classList.add("hidden");
+  signedInSection.classList.remove("hidden");
+  welcomeMessage.textContent = "Signed in as " + user.email;
+  sessionMessage.textContent = "";
+
+  loadProfile(user, requestNumber);
+}
+
+function makeProfilePanel() {
+  const panel = document.createElement("section");
+  panel.style.margin = "20px 0";
+  panel.style.padding = "16px";
+  panel.style.borderRadius = "12px";
+  panel.style.background = "#fff8f1";
 
   const heading = document.createElement("h2");
   heading.textContent = "Choose your username";
-  heading.style.color = "#5c3d2e";
 
   const description = document.createElement("p");
-  description.textContent =
-    "Pick a unique username for your BakeBook profile.";
+  description.textContent = "Choose a unique username for BakeBook.";
 
   const form = document.createElement("form");
-  form.id = "username-form";
-
   const label = document.createElement("label");
-  label.htmlFor = "username-input";
+  label.htmlFor = "bakebook-username";
   label.textContent = "Username";
 
   const input = document.createElement("input");
-  input.id = "username-input";
-  input.name = "username";
+  input.id = "bakebook-username";
   input.type = "text";
   input.minLength = 3;
   input.maxLength = 20;
   input.required = true;
-  input.autocomplete = "username";
-  input.placeholder = "e.g. sweetbaker";
   input.pattern = "[A-Za-z0-9_]{3,20}";
-  input.style.display = "block";
-  input.style.width = "100%";
-  input.style.boxSizing = "border-box";
-  input.style.margin = "8px 0 12px";
-  input.style.padding = "12px";
-  input.style.borderRadius = "8px";
-  input.style.border = "1px solid #d6c4b5";
-
-  const help = document.createElement("p");
-  help.textContent =
-    "Use 3–20 letters, numbers, or underscores.";
-  help.style.fontSize = "13px";
+  input.placeholder = "e.g. sweetbaker";
+  input.autocomplete = "username";
 
   const button = document.createElement("button");
   button.type = "submit";
   button.textContent = "Save username";
 
   const message = document.createElement("p");
-  message.id = "username-message";
   message.setAttribute("role", "status");
 
-  form.append(label, input, help, button, message);
-  profilePanel.append(heading, description, form);
+  form.append(label, input, button, message);
+  panel.append(heading, description, form);
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
-
     if (!currentUser) return;
 
     const username = input.value.trim().toLowerCase();
 
     if (!/^[a-z0-9_]{3,20}$/.test(username)) {
-      showMessage(
-        message,
-        "Use 3–20 letters, numbers, or underscores.",
-        true
-      );
+      showMessage(message, "Use 3–20 letters, numbers, or underscores.", true);
       return;
     }
 
     button.disabled = true;
-    input.disabled = true;
     showMessage(message, "Saving username...");
 
     try {
       const { error } = await supabaseClient
         .from("profiles")
-        .insert({
-          id: currentUser.id,
-          username
-        });
+        .insert({ id: currentUser.id, username });
 
       if (error) {
         if (error.code === "23505") {
-          throw new Error(
-            "That username is already taken. Try another one."
-          );
+          throw new Error("That username is taken. Try another.");
         }
         throw error;
       }
 
-      welcomeMessage.textContent =
-        "Welcome to BakeBook, @" + username + "!";
-
-      profilePanel.replaceChildren();
+      welcomeMessage.textContent = "Welcome to BakeBook, @" + username + "!";
+      panel.replaceChildren();
 
       const success = document.createElement("p");
       success.textContent = "Your username has been saved!";
-      profilePanel.appendChild(success);
+      panel.appendChild(success);
     } catch (error) {
-      showMessage(
-        message,
-        error.message || "Couldn't save your username. Please try again.",
-        true
-      );
+      showMessage(message, error.message || "Couldn't save username.", true);
       button.disabled = false;
-      input.disabled = false;
     }
   });
 
-  return profilePanel;
+  return panel;
 }
 
-
 async function loadProfile(user, requestNumber) {
-  const panel = createProfilePanel();
-
-  if (!panel.isConnected) {
-    signedInSection.insertBefore(panel, signoutButton);
+  if (!profilePanel) {
+    profilePanel = document.createElement("div");
+    signedInSection.insertBefore(profilePanel, signoutButton);
   }
 
-  panel.hidden = false;
+  profilePanel.replaceChildren();
+  const loading = document.createElement("p");
+  loading.textContent = "Loading your profile...";
+  profilePanel.appendChild(loading);
 
   try {
     const { data, error } = await supabaseClient
@@ -194,145 +166,26 @@ async function loadProfile(user, requestNumber) {
 
     if (requestNumber !== profileRequestNumber) return;
     if (!currentUser || currentUser.id !== user.id) return;
-
     if (error) throw error;
 
     if (data) {
-      welcomeMessage.textContent =
-        "Welcome to BakeBook, @" + data.username + "!";
-
-      panel.replaceChildren();
+      welcomeMessage.textContent = "Welcome to BakeBook, @" + data.username + "!";
+      profilePanel.replaceChildren();
 
       const greeting = document.createElement("p");
       greeting.textContent = "Your profile is ready.";
-      panel.appendChild(greeting);
+      profilePanel.appendChild(greeting);
     } else {
-      panel.replaceChildren();
-
-      const heading = document.createElement("h2");
-      heading.textContent = "Choose your username";
-
-      const description = document.createElement("p");
-      description.textContent =
-        "Pick a unique username for your BakeBook profile.";
-
-      const form = document.createElement("form");
-      form.id = "username-form";
-
-      const label = document.createElement("label");
-      label.htmlFor = "username-input";
-      label.textContent = "Username";
-
-      const input = document.createElement("input");
-      input.id = "username-input";
-      input.name = "username";
-      input.type = "text";
-      input.minLength = 3;
-      input.maxLength = 20;
-      input.required = true;
-      input.pattern = "[A-Za-z0-9_]{3,20}";
-      input.placeholder = "e.g. sweetbaker";
-
-      const button = document.createElement("button");
-      button.type = "submit";
-      button.textContent = "Save username";
-
-      const message = document.createElement("p");
-      message.id = "username-message";
-      message.setAttribute("role", "status");
-
-      form.append(label, input, button, message);
-      panel.append(heading, description, form);
-
-      form.addEventListener("submit", async (event) => {
-        event.preventDefault();
-
-        const username = input.value.trim().toLowerCase();
-
-        if (!/^[a-z0-9_]{3,20}$/.test(username)) {
-          showMessage(
-            message,
-            "Use 3–20 letters, numbers, or underscores.",
-            true
-          );
-          return;
-        }
-
-        button.disabled = true;
-        showMessage(message, "Saving username...");
-
-        try {
-          const { error: saveError } = await supabaseClient
-            .from("profiles")
-            .insert({ id: user.id, username });
-
-          if (saveError) {
-            if (saveError.code === "23505") {
-              throw new Error(
-                "That username is taken. Please try another."
-              );
-            }
-            throw saveError;
-          }
-
-          welcomeMessage.textContent =
-            "Welcome to BakeBook, @" + username + "!";
-
-          panel.replaceChildren();
-
-          const success = document.createElement("p");
-          success.textContent = "Your username has been saved!";
-          panel.appendChild(success);
-        } catch (saveError) {
-          showMessage(
-            message,
-            saveError.message || "Couldn't save username. Try again.",
-            true
-          );
-          button.disabled = false;
-        }
-      });
+      profilePanel.replaceChildren(makeProfilePanel());
     }
   } catch (error) {
     if (requestNumber !== profileRequestNumber) return;
 
-    panel.replaceChildren();
-
+    profilePanel.replaceChildren();
     const errorText = document.createElement("p");
-    errorText.textContent =
-      "Couldn't load your profile. Please refresh and try again.";
-    panel.appendChild(errorText);
-
+    errorText.textContent = "Couldn't load your profile. Please refresh and try again.";
+    profilePanel.appendChild(errorText);
     console.error("Profile loading error:", error);
-  }
-}
-
-
-  currentUser = user;
-  const requestNumber = ++profileRequestNumber;
-
-  authSection.classList.add("hidden");
-  signedInSection.classList.remove("hidden");
-
-  welcomeMessage.textContent = "Signed in as " + user.email;
-  sessionMessage.textContent = "";
-
-  loadProfile(user, requestNumber);
-}
-
-function showSignedOut() {
-  currentUser = null;
-  profileRequestNumber++;
-
-  signedInSection.classList.add("hidden");
-  authSection.classList.remove("hidden");
-
-  passwordInput.value = "";
-  sessionMessage.textContent = "";
-
-  if (profilePanel) {
-    profilePanel.remove();
-    profilePanel = null;
   }
 }
 
@@ -367,47 +220,38 @@ authForm.addEventListener("submit", async (event) => {
     }
   }
 
-  setLoading(true);
+  submitButton.disabled = true;
+  signinTab.disabled = true;
+  signupTab.disabled = true;
+  submitButton.textContent = "Please wait...";
   authMessage.textContent = "";
 
   try {
-    let result;
-
-    if (isSigningUp) {
-      result = await supabaseClient.auth.signUp({ email, password });
-    } else {
-      result = await supabaseClient.auth.signInWithPassword({
-        email,
-        password
-      });
-    }
+    const result = isSigningUp
+      ? await supabaseClient.auth.signUp({ email, password })
+      : await supabaseClient.auth.signInWithPassword({ email, password });
 
     if (result.error) throw result.error;
 
     if (result.data.session && result.data.user) {
       showSignedIn(result.data.user);
     } else if (isSigningUp) {
-      showMessage(
-        authMessage,
-        "Account created. Check your email if confirmation is required."
-      );
+      showMessage(authMessage, "Account created. Check your email if confirmation is required.");
     } else {
       showMessage(authMessage, "Couldn't start your session. Try again.", true);
     }
   } catch (error) {
-    showMessage(
-      authMessage,
-      error.message || "Something went wrong. Please try again.",
-      true
-    );
+    showMessage(authMessage, error.message || "Something went wrong. Please try again.", true);
   } finally {
-    setLoading(false);
+    submitButton.disabled = false;
+    signinTab.disabled = false;
+    signupTab.disabled = false;
+    submitButton.textContent = isSigningUp ? "Create account" : "Sign in";
   }
 });
 
 signoutButton.addEventListener("click", async () => {
   signoutButton.disabled = true;
-  showMessage(sessionMessage, "");
 
   try {
     const { error } = await supabaseClient.auth.signOut();
@@ -417,11 +261,7 @@ signoutButton.addEventListener("click", async () => {
     switchMode(false);
     showMessage(authMessage, "You've signed out successfully.");
   } catch (error) {
-    showMessage(
-      sessionMessage,
-      error.message || "Couldn't sign out. Please try again.",
-      true
-    );
+    showMessage(sessionMessage, error.message || "Couldn't sign out.", true);
   } finally {
     signoutButton.disabled = false;
   }
@@ -443,11 +283,10 @@ async function restoreSession() {
 }
 
 supabaseClient.auth.onAuthStateChange((event, session) => {
-  if (session?.user) {
-    // Run after the auth callback finishes.
-    setTimeout(() => showSignedIn(session.user), 0);
-  } else if (event === "SIGNED_OUT") {
+  if (event === "SIGNED_OUT") {
     showSignedOut();
+  } else if (session?.user) {
+    setTimeout(() => showSignedIn(session.user), 0);
   }
 });
 
