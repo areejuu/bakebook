@@ -4,793 +4,697 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#f8f2e9">
-  <title>BakeBook — A little book of recipes</title>
+  <title>BakeBook — A little book of lovely things</title>
+  <meta name="theme-color" content="#f6eee3">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --paper: #faf6ef;
-      --paper-dark: #f0e6d8;
-      --white: #fffdf9;
-      --ink: #40332d;
-      --brown: #795342;
-      --brown-dark: #5d3e32;
-      --muted: #978579;
-      --pink: #e9c8c9;
-      --pink-light: #f7e9e6;
-      --line: #e7d9cb;
-      --green: #71806a;
-      --shadow: 0 12px 35px rgba(83, 57, 40, 0.07);
+      --paper: #f8f0e5;
+      --paper-light: #fffaf2;
+      --ink: #44352f;
+      --muted: #88776e;
+      --rose: #bd7e88;
+      --rose-light: #f0d8d8;
+      --rose-pale: #f8eae6;
+      --green: #77836a;
+      --line: #dfcdb9;
+      --shadow: 0 12px 35px rgba(91, 65, 49, .09);
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      min-height: 100vh;
       color: var(--ink);
-      font-family: Georgia, "Times New Roman", serif;
+      font-family: "DM Sans", sans-serif;
       background-color: var(--paper);
       background-image:
-        radial-gradient(ellipse at 15% 10%, rgba(226, 197, 173, 0.15), transparent 40%),
-        radial-gradient(ellipse at 90% 85%, rgba(230, 193, 197, 0.13), transparent 35%);
-      line-height: 1.6;
+        radial-gradient(ellipse at 10% 15%, rgba(208, 159, 148, .14), transparent 35%),
+        radial-gradient(ellipse at 90% 80%, rgba(171, 157, 126, .13), transparent 32%),
+        repeating-linear-gradient(0deg, transparent, transparent 5px, rgba(112, 83, 59, .018) 6px);
+      min-height: 100vh;
     }
 
-    button,
-    input,
-    textarea,
-    select {
-      font: inherit;
-    }
+    button, input, textarea, select { font: inherit; }
+    button { cursor: pointer; }
 
-    button {
-      cursor: pointer;
-    }
-
-    button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
-    button:focus-visible,
-    input:focus-visible,
-    textarea:focus-visible,
-    select:focus-visible {
-      outline: 2px solid var(--brown);
+    button:focus-visible, input:focus-visible,
+    textarea:focus-visible, select:focus-visible {
+      outline: 2px solid var(--rose);
       outline-offset: 3px;
     }
 
-    .page-shell {
-      width: min(1120px, calc(100% - 36px));
-      margin: 0 auto;
+    .site-shell {
+      max-width: 1240px;
+      margin: auto;
+      padding: 24px 36px 50px;
     }
 
-    .top-note {
-      padding: 9px 12px;
-      text-align: center;
-      color: var(--brown);
-      background: var(--pink-light);
-      border-bottom: 1px solid #efd9d5;
-      font-size: 12px;
-      letter-spacing: 1.3px;
-    }
-
-    .site-header {
-      padding: 30px 0 24px;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .header-inner {
+    .topline {
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .brand-mark {
-      display: grid;
-      place-items: center;
-      width: 54px;
-      height: 54px;
-      border: 1px solid #d8b8a5;
-      border-radius: 50%;
-      color: var(--brown);
-      background: var(--white);
-      font-size: 27px;
-    }
-
-    .brand-name {
-      margin: 0;
-      color: var(--brown-dark);
-      font-size: clamp(27px, 4vw, 36px);
-      font-weight: normal;
-      letter-spacing: -1.3px;
-      line-height: 1.1;
-    }
-
-    .brand-caption {
-      margin: 5px 0 0;
+      gap: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
       color: var(--muted);
-      font-size: 11px;
-      letter-spacing: 1.4px;
-      text-transform: uppercase;
-    }
-
-    .header-decoration {
-      color: #b68a78;
-      font-size: 25px;
-      letter-spacing: 8px;
-    }
-
-    main {
-      padding: 38px 0 55px;
-    }
-
-    .paper-card {
-      position: relative;
-      overflow: hidden;
-      padding: clamp(25px, 5vw, 50px);
-      background-color: var(--white);
-      background-image: linear-gradient(
-        90deg,
-        rgba(227, 211, 192, 0.07) 1px,
-        transparent 1px
-      );
-      background-size: 5px 100%;
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-    }
-
-    .auth-card {
-      width: min(490px, 100%);
-      margin: 12px auto;
-      border-radius: 3px;
-    }
-
-    .ornament {
-      margin-bottom: 10px;
-      color: #b98b7c;
-      text-align: center;
-      font-size: 20px;
-      letter-spacing: 7px;
-    }
-
-    .eyebrow {
-      margin: 0 0 8px;
-      color: var(--brown);
-      text-align: center;
-      font-size: 11px;
+      font-size: 10px;
       letter-spacing: 2px;
       text-transform: uppercase;
     }
 
-    h1,
-    h2,
-    h3,
-    p {
-      overflow-wrap: anywhere;
+    .topline-mark { color: var(--rose); font-size: 16px; }
+
+    .masthead {
+      position: relative;
+      text-align: center;
+      padding: 35px 10px 27px;
     }
 
-    .hero-title {
+    .masthead-kicker {
+      color: var(--rose);
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .brand {
+      font-family: "Playfair Display", Georgia, serif;
+      font-weight: 500;
+      font-size: clamp(49px, 8vw, 86px);
+      line-height: 1;
+      letter-spacing: -4px;
       margin: 0;
-      color: var(--brown-dark);
-      text-align: center;
-      font-size: clamp(34px, 6vw, 48px);
-      font-weight: normal;
-      line-height: 1.15;
+    }
+
+    .brand span { color: var(--rose); font-style: italic; }
+
+    .brand-subtitle {
+      font-family: "Playfair Display", Georgia, serif;
+      font-style: italic;
+      font-size: 16px;
+      color: var(--muted);
+      margin: 13px 0 0;
+    }
+
+    .flower {
+      position: absolute;
+      color: var(--rose);
+      font-size: 42px;
+      opacity: .8;
+      line-height: 1;
+    }
+
+    .flower-left { left: 9%; top: 48px; transform: rotate(-20deg); }
+    .flower-right { right: 9%; top: 47px; transform: rotate(17deg); }
+
+    .little-rule {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--rose);
+      font-size: 13px;
+      margin: 0 auto 30px;
+      max-width: 280px;
+    }
+
+    .little-rule::before, .little-rule::after {
+      content: "";
+      height: 1px;
+      background: var(--line);
+      flex: 1;
+    }
+
+    .hidden { display: none !important; }
+
+    /* Sign-in: a framed page from an old recipe notebook */
+
+    .auth-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(300px, .9fr);
+      gap: 42px;
+      align-items: center;
+      max-width: 920px;
+      margin: 8px auto 44px;
+    }
+
+    .welcome-note { padding: 12px 0 20px; }
+
+    .eyebrow {
+      font-size: 10px;
+      letter-spacing: 2.5px;
+      color: var(--rose);
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .welcome-note h2 {
+      font: 500 clamp(32px, 4vw, 48px)/1.18 "Playfair Display", Georgia, serif;
+      margin: 14px 0;
       letter-spacing: -1px;
     }
 
-    .subtitle {
-      max-width: 340px;
-      margin: 15px auto 28px;
+    .welcome-note h2 em { color: var(--rose); }
+
+    .welcome-note p {
       color: var(--muted);
-      text-align: center;
-      font-size: 15px;
-      line-height: 1.8;
-    }
-
-    .divider {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-      margin: 27px 0;
-      color: #b48a79;
-      font-size: 15px;
-    }
-
-    .divider::before,
-    .divider::after {
-      flex: 1;
-      height: 1px;
-      background: var(--line);
-      content: "";
-    }
-
-    .tabs {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 24px;
-    }
-
-    .tab {
-      padding: 11px 8px;
-      border: 1px solid var(--line);
-      border-radius: 2px;
-      background: transparent;
-      color: var(--brown);
-      font-size: 14px;
-      transition: background 0.2s ease;
-    }
-
-    .tab:hover {
-      background: var(--pink-light);
-    }
-
-    .tab.active {
-      border-color: var(--brown);
-      background: var(--brown);
-      color: white;
-    }
-
-    label {
-      display: block;
-      margin: 17px 0 7px;
-      color: var(--brown-dark);
+      line-height: 1.9;
       font-size: 13px;
-      font-weight: bold;
+      max-width: 360px;
     }
 
-    input,
-    textarea,
-    select {
-      width: 100%;
-      min-width: 0;
-      padding: 12px 13px;
-      border: 1px solid #e3d6c9;
-      border-radius: 2px;
-      background: #fffefa;
-      color: var(--ink);
-      font-size: 14px;
+    .little-list {
+      list-style: none;
+      padding: 0;
+      margin: 26px 0 0;
+      display: grid;
+      gap: 13px;
+      font-size: 12px;
     }
 
-    input::placeholder,
-    textarea::placeholder {
-      color: #b3a69a;
+    .little-list li { display: flex; gap: 11px; align-items: center; }
+    .little-list span { color: var(--rose); font-size: 16px; }
+
+    .auth-paper {
+      position: relative;
+      padding: 34px 30px 30px;
+      background: var(--paper-light);
+      border: 1px solid #d8c4ad;
+      outline: 1px solid rgba(189, 126, 136, .38);
+      outline-offset: 5px;
+      box-shadow: var(--shadow);
+      transform: rotate(.5deg);
     }
 
-    input:focus,
-    textarea:focus,
-    select:focus {
-      border-color: #b88d7a;
-      outline: none;
+    .auth-paper::before, .auth-paper::after {
+      content: "✿";
+      position: absolute;
+      color: var(--rose);
+      font-size: 20px;
     }
 
-    .password-help {
-      margin: 8px 0;
+    .auth-paper::before { top: 10px; left: 12px; }
+    .auth-paper::after { bottom: 9px; right: 12px; }
+
+    .paper-number {
+      text-align: center;
+      color: var(--rose);
+      font: italic 13px "Playfair Display", Georgia, serif;
+      margin-bottom: 8px;
+    }
+
+    .auth-paper h2 {
+      text-align: center;
+      font: 500 28px "Playfair Display", Georgia, serif;
+      margin: 0 0 7px;
+    }
+
+    .auth-intro {
+      text-align: center;
+      color: var(--muted);
+      font-size: 11px;
+      margin: 0 0 24px;
+    }
+
+    .auth-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 21px;
+    }
+
+    .auth-tabs button {
+      flex: 1;
+      border: 0;
+      background: transparent;
+      padding: 11px 6px;
       color: var(--muted);
       font-size: 12px;
     }
 
-    .main-button,
-    .secondary-button {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-      min-height: 44px;
-      padding: 11px 20px;
-      border: 1px solid var(--brown);
-      border-radius: 2px;
-      font-size: 14px;
-      transition: background 0.2s ease, color 0.2s ease;
+    .auth-tabs button.active {
+      color: var(--ink);
+      border-bottom: 2px solid var(--rose);
+      font-weight: 700;
     }
 
-    .main-button {
-      background: var(--brown);
-      color: white;
+    .field { margin-bottom: 16px; }
+
+    .field label {
+      display: block;
+      font-size: 11px;
+      margin-bottom: 7px;
+      color: #68564d;
     }
 
-    .main-button:hover {
-      background: var(--brown-dark);
-    }
-
-    .secondary-button {
-      background: transparent;
-      color: var(--brown);
-    }
-
-    .secondary-button:hover {
-      background: var(--pink-light);
-    }
-
-    .auth-submit {
+    .field input, .field textarea, .field select,
+    .search-input {
       width: 100%;
-      margin-top: 22px;
+      border: 1px solid var(--line);
+      border-radius: 2px;
+      background: #fffdf8;
+      color: var(--ink);
+      padding: 12px;
+      font-size: 12px;
     }
+
+    .field textarea { resize: vertical; line-height: 1.7; }
+
+    .field input::placeholder, .field textarea::placeholder {
+      color: #b5a69a;
+    }
+
+    .primary-button {
+      width: 100%;
+      border: 0;
+      background: var(--rose);
+      color: white;
+      padding: 13px 16px;
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: background .2s, transform .2s;
+    }
+
+    .primary-button:hover { background: #a96c77; transform: translateY(-1px); }
 
     .message {
-      margin: 15px 0 0;
-      font-family: Arial, sans-serif;
-      font-size: 13px;
-      line-height: 1.6;
+      font-size: 12px;
+      line-height: 1.7;
+      color: var(--green);
+      margin-top: 12px;
       overflow-wrap: anywhere;
     }
 
-    .message:empty {
-      display: none;
-    }
+    .message:empty { display: none; }
 
-    .signed-in {
-      width: min(100%, 900px);
-      margin: 0 auto;
-    }
-
-    .welcome-card {
-      margin-bottom: 28px;
+    .tiny-note {
       text-align: center;
-    }
-
-    .welcome-title {
-      margin: 0;
-      color: var(--brown-dark);
-      font-size: clamp(30px, 5vw, 43px);
-      font-weight: normal;
-    }
-
-    #welcome-message {
-      color: var(--brown);
-      overflow-wrap: anywhere;
-    }
-
-    .section-heading {
-      margin: 0;
-      color: var(--brown-dark);
-      font-size: 27px;
-      font-weight: normal;
-    }
-
-    .section-note {
-      margin: 5px 0 22px;
+      font: italic 12px "Playfair Display", Georgia, serif;
       color: var(--muted);
-      font-size: 14px;
+      margin: 19px 0 0;
+    }
+
+    /* Signed-in cookbook */
+
+    .journal-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      padding: 18px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 28px;
+    }
+
+    .journal-top h2 {
+      font: 500 29px "Playfair Display", Georgia, serif;
+      margin: 0;
+    }
+
+    .journal-top p {
+      font-size: 12px;
+      color: var(--muted);
+      margin: 5px 0 0;
+    }
+
+    .signout-button {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      padding: 9px 13px;
+      font-size: 11px;
     }
 
     .journal-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: 24px;
+      grid-template-columns: 210px minmax(0, 1fr);
+      gap: 28px;
       align-items: start;
     }
 
-    .journal-panel {
-      min-width: 0;
-      padding: 24px;
-      border: 1px solid var(--line);
-      background: rgba(255, 253, 249, 0.78);
+    .side-note {
+      background: #f0dfd7;
+      padding: 22px 18px;
+      border-radius: 2px 2px 22px 2px;
+      transform: rotate(-1deg);
+      position: relative;
     }
 
-    .journal-panel h3 {
+    .side-note::before {
+      content: "";
+      position: absolute;
+      top: -8px;
+      left: 35%;
+      width: 70px;
+      height: 19px;
+      background: rgba(189, 126, 136, .42);
+      transform: rotate(-3deg);
+    }
+
+    .side-note h3 {
+      font: italic 21px "Playfair Display", Georgia, serif;
+      margin: 4px 0 16px;
+    }
+
+    .side-nav { display: grid; gap: 4px; }
+
+    .side-nav a {
+      color: #65524a;
+      text-decoration: none;
+      font-size: 12px;
+      padding: 10px 6px;
+      border-bottom: 1px dashed rgba(110, 81, 65, .2);
+    }
+
+    .side-nav a:hover { color: #a45f6c; }
+
+    .side-note .side-quote {
+      font: italic 14px/1.7 "Playfair Display", Georgia, serif;
+      color: #80655b;
+      margin: 22px 0 0;
+    }
+
+    .content-stack { display: grid; gap: 26px; min-width: 0; }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 10px;
+      margin-bottom: 16px;
+    }
+
+    .section-heading h3 {
+      font: 500 25px "Playfair Display", Georgia, serif;
       margin: 0;
-      color: var(--brown-dark);
-      font-size: 22px;
-      font-weight: normal;
     }
 
-    .field-row {
+    .section-heading span {
+      color: var(--rose);
+      font: italic 12px "Playfair Display", Georgia, serif;
+    }
+
+    .recipe-paper {
+      background: rgba(255, 250, 242, .88);
+      border: 1px solid var(--line);
+      padding: 24px;
+      box-shadow: 4px 5px 0 rgba(205, 178, 154, .18);
+    }
+
+    .recipe-paper .field-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      gap: 14px;
     }
 
-    textarea {
-      min-height: 110px;
-      resize: vertical;
-    }
+    .recipe-paper .field-grid .field { min-width: 0; }
 
-    .photo-field {
-      padding: 12px;
-      border: 1px dashed #d9bfb0;
-      background: #fffaf5;
-    }
-
-    .photo-help {
-      margin: 6px 0 0;
+    .visibility-note {
+      font-size: 11px;
       color: var(--muted);
-      font-size: 12px;
+      line-height: 1.7;
+      margin: -2px 0 17px;
     }
 
     .search-row {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
+      display: flex;
       gap: 8px;
-      margin: 17px 0;
+      margin-bottom: 17px;
     }
+
+    .search-row .search-input { flex: 1; min-width: 0; }
+
+    .secondary-button {
+      background: #e9d8d0;
+      color: #654b45;
+      border: 1px solid #d8beb5;
+      padding: 10px 15px;
+      font-size: 11px;
+    }
+
+    .secondary-button:hover { background: #dfc4c0; }
 
     .recipe-list {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
+      gap: 15px;
     }
 
-    .recipe-card {
-      min-width: 0;
-      padding: 12px;
-      border: 1px solid var(--line);
-      background: var(--white);
-    }
-
-    .recipe-image-placeholder {
-      display: grid;
-      place-items: center;
-      aspect-ratio: 4 / 3;
-      background: var(--pink-light);
-      color: var(--brown);
-      font-size: 30px;
-    }
-
-    .recipe-card h4 {
-      margin: 10px 0 4px;
-      color: var(--brown-dark);
-      font-size: 17px;
-      font-weight: normal;
-      overflow-wrap: anywhere;
-    }
-
-    .recipe-card p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .empty-state {
+    .empty-note {
+      border: 1px dashed #d8c4ad;
       padding: 28px 16px;
-      border: 1px dashed var(--line);
-      color: var(--muted);
       text-align: center;
-      font-size: 14px;
-    }
-
-    .empty-state .symbol {
-      display: block;
-      margin-bottom: 7px;
-      color: #bb9281;
-      font-size: 25px;
-    }
-
-    .visibility-note {
-      margin-top: 8px;
       color: var(--muted);
-      font-size: 12px;
+      font: italic 15px/1.8 "Playfair Display", Georgia, serif;
+      grid-column: 1 / -1;
     }
 
-    .signout-row {
-      display: flex;
-      justify-content: center;
-      margin-top: 30px;
-    }
+    .empty-note span { display: block; font-size: 25px; margin-bottom: 8px; }
 
-    .hidden {
-      display: none !important;
-    }
-
-    footer {
-      padding: 22px 12px 28px;
+    .site-footer {
+      text-align: center;
+      padding-top: 35px;
+      margin-top: 35px;
       border-top: 1px solid var(--line);
       color: var(--muted);
-      text-align: center;
-      font-size: 12px;
-      letter-spacing: 0.3px;
+      font: italic 13px "Playfair Display", Georgia, serif;
     }
 
-    footer span {
-      color: #b27f80;
+    @media (max-width: 760px) {
+      .site-shell { padding: 17px 18px 35px; }
+      .flower { font-size: 29px; }
+      .flower-left { left: 1%; }
+      .flower-right { right: 1%; }
+      .auth-layout { grid-template-columns: 1fr; gap: 18px; max-width: 440px; }
+      .welcome-note { text-align: center; padding: 5px 0; }
+      .welcome-note p { margin-left: auto; margin-right: auto; }
+      .little-list { max-width: 270px; margin-left: auto; margin-right: auto; text-align: left; }
+      .auth-paper { transform: none; }
+      .journal-grid { grid-template-columns: 1fr; }
+      .side-note { transform: none; }
+      .side-nav { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .side-nav a { text-align: center; }
     }
 
-    @media (max-width: 700px) {
-      .journal-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .header-decoration {
-        display: none;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .page-shell {
-        width: min(100% - 22px, 1120px);
-      }
-
-      .site-header {
-        padding: 23px 0;
-      }
-
-      .brand-mark {
-        width: 45px;
-        height: 45px;
-        font-size: 23px;
-      }
-
-      .brand-caption {
-        font-size: 9px;
-        letter-spacing: 1px;
-      }
-
-      main {
-        padding: 24px 0 35px;
-      }
-
-      .paper-card {
-        padding: 25px 19px;
-      }
-
-      .journal-panel {
-        padding: 18px;
-      }
-
-      .recipe-list {
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-      }
-
-      .field-row {
-        grid-template-columns: 1fr;
-        gap: 0;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
-      }
-
-      *,
-      *::before,
-      *::after {
-        transition: none !important;
-      }
+    @media (max-width: 450px) {
+      .topline { font-size: 8px; letter-spacing: 1px; }
+      .brand { letter-spacing: -2px; }
+      .recipe-paper { padding: 16px; }
+      .recipe-paper .field-grid, .recipe-list { grid-template-columns: 1fr; }
+      .search-row { flex-wrap: wrap; }
+      .search-row .secondary-button { flex: 1; }
+      .journal-top h2 { font-size: 25px; }
     }
   </style>
 </head>
 
 <body>
-  <div class="top-note">
-    A LITTLE SOMETHING SWEET FOR YOUR EVERYDAY ♡
-  </div>
+  <div class="site-shell">
 
-  <header class="site-header">
-    <div class="page-shell header-inner">
-      <a class="brand" href="#" aria-label="BakeBook home">
-        <span class="brand-mark" aria-hidden="true">❀</span>
-        <span>
-          <span class="brand-name" style="display:block">BakeBook</span>
-          <span class="brand-caption">Recipes made with love</span>
-        </span>
-      </a>
-      <div class="header-decoration" aria-hidden="true">✳ ♡ ✳</div>
+    <div class="topline">
+      <span>✳ A journal for the things we bake ✳</span>
+      <span class="topline-mark">Made with a little love ♡</span>
     </div>
-  </header>
 
-  <main class="page-shell">
-    <section id="auth-section" class="paper-card auth-card">
-      <div class="ornament" aria-hidden="true">✿ · ❀ · ✿</div>
-      <p class="eyebrow">Your own little cookbook</p>
-      <h1 class="hero-title">Come on in.</h1>
-      <p class="subtitle">
-        A place for your favourite bakes, handwritten-style notes,
-        and recipes worth keeping.
-      </p>
+    <header class="masthead">
+      <span class="flower flower-left" aria-hidden="true">❀</span>
+      <span class="flower flower-right" aria-hidden="true">✿</span>
+      <div class="masthead-kicker">Gather · Bake · Remember</div>
+      <h1 class="brand">Bake<span>Book</span></h1>
+      <p class="brand-subtitle">A little book of lovely things.</p>
+    </header>
 
-      <div class="divider" aria-hidden="true">♡</div>
+    <div class="little-rule" aria-hidden="true">✿ &nbsp; ❧ &nbsp; ✿</div>
 
-      <div class="tabs">
-        <button type="button" id="signin-tab" class="tab active">
-          Sign in
-        </button>
-        <button type="button" id="signup-tab" class="tab">
-          Create account
-        </button>
-      </div>
+    <!-- Sign in / sign up -->
+    <section id="auth-section">
+      <div class="auth-layout">
 
-      <form id="auth-form">
-        <label for="email">Email address</label>
-        <input
-          type="email"
-          id="email"
-          autocomplete="email"
-          placeholder="you@example.com"
-          required
-        >
-
-        <label for="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          autocomplete="current-password"
-          placeholder="Your password"
-          minlength="8"
-          required
-        >
-
-        <p id="password-help" class="password-help hidden">
-          At least 8 characters, including an uppercase letter,
-          a lowercase letter, and a number.
-        </p>
-
-        <button type="submit" id="submit-button" class="main-button auth-submit">
-          Sign in
-        </button>
-      </form>
-
-      <p id="auth-message" class="message" role="status" aria-live="polite"></p>
-    </section>
-
-    <section id="signed-in-section" class="signed-in hidden">
-      <div class="paper-card welcome-card">
-        <div class="ornament" aria-hidden="true">✿ · ♡ · ✿</div>
-        <p class="eyebrow">Your pages are waiting</p>
-        <h1 class="welcome-title">Welcome to BakeBook</h1>
-        <p id="welcome-message"></p>
-        <p class="subtitle">
-          Your personal recipe journal, all in one place.
-        </p>
-      </div>
-
-      <div class="journal-grid">
-        <section class="journal-panel" aria-labelledby="add-recipe-heading">
-          <p class="eyebrow" style="text-align:left">Fresh from your kitchen</p>
-          <h2 id="add-recipe-heading" class="section-heading">Add a recipe</h2>
-          <p class="section-note">Keep a little record of something lovely.</p>
-
-          <form id="recipe-form">
-            <label for="recipe-title">Recipe name</label>
-            <input
-              id="recipe-title"
-              name="title"
-              type="text"
-              placeholder="Brown butter cookies..."
-              maxlength="120"
-              required
-            >
-
-            <div class="field-row">
-              <div>
-                <label for="prep-time">Prep time (minutes)</label>
-                <input
-                  id="prep-time"
-                  name="prep_time"
-                  type="number"
-                  min="0"
-                  max="1440"
-                  placeholder="20"
-                >
-              </div>
-              <div>
-                <label for="bake-time">Bake time (minutes)</label>
-                <input
-                  id="bake-time"
-                  name="bake_time"
-                  type="number"
-                  min="0"
-                  max="1440"
-                  placeholder="15"
-                >
-              </div>
-            </div>
-
-            <label for="ingredients">Ingredients</label>
-            <textarea
-              id="ingredients"
-              name="ingredients"
-              placeholder="Write each ingredient on a new line..."
-              required
-            ></textarea>
-
-            <label for="instructions">Instructions</label>
-            <textarea
-              id="instructions"
-              name="instructions"
-              placeholder="How do you make it?"
-              required
-            ></textarea>
-
-            <label for="recipe-photo">A photo of your bake</label>
-            <div class="photo-field">
-              <input
-                id="recipe-photo"
-                name="photo"
-                type="file"
-                accept="image/jpeg,image/png,image/webp"
-              >
-              <p class="photo-help">JPG, PNG or WEBP · Up to 5 MB</p>
-            </div>
-
-            <label for="recipe-visibility">Who can see this recipe?</label>
-            <select id="recipe-visibility" name="visibility">
-              <option value="private">♡ Just me — private</option>
-              <option value="public">✿ Share with the community — public</option>
-            </select>
-            <p class="visibility-note">
-              Your recipes stay private unless you choose to share them.
-            </p>
-
-            <button type="submit" id="save-recipe-button" class="main-button auth-submit">
-              Save to my book ♡
-            </button>
-            <p id="recipe-message" class="message" role="status" aria-live="polite"></p>
-          </form>
-        </section>
-
-        <section class="journal-panel" aria-labelledby="my-recipes-heading">
-          <p class="eyebrow" style="text-align:left">Collected with love</p>
-          <h2 id="my-recipes-heading" class="section-heading">My recipes</h2>
-          <p class="section-note">All your favourite things, in one place.</p>
-
-          <div class="search-row">
-            <input
-              id="recipe-search"
-              type="search"
-              placeholder="Find a recipe..."
-              aria-label="Search recipes"
-            >
-            <button type="button" id="search-button" class="secondary-button">
-              Search
-            </button>
-          </div>
-
-          <div id="recipe-list" class="recipe-list">
-            <div class="empty-state" style="grid-column:1/-1">
-              <span class="symbol" aria-hidden="true">♡</span>
-              Your recipe pages will appear here.
-            </div>
-          </div>
-
-          <div class="divider" aria-hidden="true">✿</div>
-
-          <p class="eyebrow" style="text-align:left">From other kitchens</p>
-          <h3>Community recipes</h3>
-          <p class="section-note">
-            Little discoveries shared by other BakeBook bakers.
+        <div class="welcome-note">
+          <div class="eyebrow">Your kitchen, in pages</div>
+          <h2>Some things are<br>too lovely to <em>forget.</em></h2>
+          <p>
+            Keep the recipes you love, the little changes that make them yours,
+            and the bakes you want to remember. Your own corner of the kitchen,
+            gathered in one place.
           </p>
 
-          <div id="public-recipe-list" class="recipe-list">
-            <div class="empty-state" style="grid-column:1/-1">
-              <span class="symbol" aria-hidden="true">❀</span>
-              Shared recipes will appear here.
-            </div>
+          <ul class="little-list">
+            <li><span>♡</span> Keep your treasured recipes together</li>
+            <li><span>❀</span> Add photographs from your kitchen</li>
+            <li><span>✧</span> Discover recipes shared by other bakers</li>
+          </ul>
+        </div>
+
+        <div class="auth-paper">
+          <div class="paper-number">A fresh page, just for you</div>
+          <h2>Come on in</h2>
+          <p class="auth-intro">Your recipe journal is waiting.</p>
+
+          <div class="auth-tabs">
+            <button type="button" id="signin-tab" class="active">Sign in</button>
+            <button type="button" id="signup-tab">Create an account</button>
           </div>
-        </section>
-      </div>
 
-      <div class="signout-row">
-        <button type="button" id="signout-button" class="secondary-button">
-          Sign out
-        </button>
+          <form id="auth-form">
+            <div class="field">
+              <label for="email">Email address</label>
+              <input type="email" id="email" placeholder="you@example.com" required autocomplete="email">
+            </div>
+
+            <div class="field">
+              <label for="password">Password</label>
+              <input type="password" id="password" placeholder="At least 8 characters" required autocomplete="current-password">
+            </div>
+
+            <p id="password-help" class="visibility-note hidden">
+              Use at least 8 characters, including an uppercase letter,
+              a lowercase letter, and a number.
+            </p>
+
+            <button type="submit" id="submit-button" class="primary-button">Open my journal &nbsp; →</button>
+            <p id="auth-message" class="message" role="status" aria-live="polite"></p>
+          </form>
+
+          <p class="tiny-note">There's always room for one more recipe ♡</p>
+        </div>
+
       </div>
-      <p id="session-message" class="message" role="status" aria-live="polite"></p>
     </section>
-  </main>
 
-  <footer>
-    Made slowly, shared happily <span>♡</span> one recipe at a time.
-  </footer>
+    <!-- Signed-in journal -->
+    <section id="signed-in-section" class="hidden">
+      <div class="journal-top">
+        <div>
+          <div class="eyebrow">Welcome to your kitchen</div>
+          <h2>Your personal recipe journal</h2>
+          <p>Your personal recipe journal, all in one place.</p>
+          <p id="welcome-message"></p>
+        </div>
+        <button id="signout-button" class="signout-button" type="button">Sign out ↗</button>
+      </div>
+
+      <p id="session-message" class="message" role="status" aria-live="polite"></p>
+
+      <div class="journal-grid">
+        <aside class="side-note">
+          <div class="eyebrow">The little index</div>
+          <h3>In this journal…</h3>
+          <nav class="side-nav" aria-label="Journal sections">
+            <a href="#my-recipes">♡ My recipes</a>
+            <a href="#add-recipe">✿ Add a recipe</a>
+            <a href="#public-recipes">✧ Community</a>
+          </nav>
+          <p class="side-quote">“A pinch of this, a little of that, and something wonderful.”</p>
+          <p style="text-align:right;color:#a96c77;font-size:12px;">— kitchen notes</p>
+        </aside>
+
+        <div class="content-stack">
+
+          <section id="add-recipe">
+            <div class="section-heading">
+              <h3>Put something in the oven</h3>
+              <span>New recipe ♡</span>
+            </div>
+
+            <form id="recipe-form" class="recipe-paper">
+              <div class="field">
+                <label for="recipe-title">What are we making?</label>
+                <input type="text" id="recipe-title" placeholder="Grandma's vanilla cake…" required>
+              </div>
+
+              <div class="field-grid">
+                <div class="field">
+                  <label for="prep-time">Preparation time (minutes)</label>
+                  <input type="number" id="prep-time" min="0" placeholder="20">
+                </div>
+                <div class="field">
+                  <label for="bake-time">Baking time (minutes)</label>
+                  <input type="number" id="bake-time" min="0" placeholder="35">
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="ingredients">Ingredients</label>
+                <textarea id="ingredients" rows="5" placeholder="200 g flour&#10;100 g butter&#10;A little vanilla…" required></textarea>
+              </div>
+
+              <div class="field">
+                <label for="instructions">Method</label>
+                <textarea id="instructions" rows="5" placeholder="Write down each step, just as you like it…" required></textarea>
+              </div>
+
+              <div class="field">
+                <label for="recipe-photo">A little photograph (optional)</label>
+                <input type="file" id="recipe-photo" accept="image/jpeg,image/png,image/webp">
+                <p class="visibility-note">JPG, PNG or WEBP · Up to 5 MB</p>
+              </div>
+
+              <div class="field">
+                <label for="recipe-visibility">Keep this recipe…</label>
+                <select id="recipe-visibility">
+                  <option value="private">Just for me · Private</option>
+                  <option value="public">Share with the community · Public</option>
+                </select>
+              </div>
+
+              <button type="submit" id="save-recipe-button" class="primary-button">Save to my cookbook &nbsp; ♡</button>
+              <p id="recipe-message" class="message" role="status" aria-live="polite"></p>
+            </form>
+          </section>
+
+          <section id="my-recipes">
+            <div class="section-heading">
+              <h3>My recipe collection</h3>
+              <span>Kept with love</span>
+            </div>
+
+            <div class="search-row">
+              <input type="search" id="recipe-search" class="search-input" placeholder="Find a recipe in your journal…">
+              <button type="button" id="search-button" class="secondary-button">Search</button>
+            </div>
+
+            <div id="recipe-list" class="recipe-list">
+              <div class="empty-note">
+                <span>♡</span>
+                Your recipe pages will live here.<br>
+                Save your first recipe to begin.
+              </div>
+            </div>
+          </section>
+
+          <section id="public-recipes">
+            <div class="section-heading">
+              <h3>From other kitchens</h3>
+              <span>A shared table ✿</span>
+            </div>
+
+            <div id="public-recipe-list" class="recipe-list">
+              <div class="empty-note">
+                <span>❀</span>
+                Good things are meant to be shared.<br>
+                Public recipes from other bakers will appear here.
+              </div>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      Baked slowly, kept dearly. &nbsp; ✿ &nbsp; BakeBook
+    </footer>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="config.js"></script>
