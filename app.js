@@ -31,10 +31,14 @@ const BUCKET = "recipe-photos";
 
 function showMessage(element, message, isError = false) {
   if (!element) return;
-  element.textContent = message;
-  element.style.color = isError ? "#b42318" : "#356b43";
-}
 
+  element.textContent = message;
+  element.style.color = isError ? "#9b3d36" : "#765548";
+  element.style.fontFamily = "Georgia, serif";
+  element.style.fontSize = "15px";
+  element.style.fontStyle = "italic";
+  element.style.marginTop = "12px";
+}
 function switchMode(signingUp) {
   isSigningUp = signingUp;
   signinTab.classList.toggle("active", !signingUp);
