@@ -216,16 +216,18 @@ function makeRecipeCard(recipe, showOwnerActions = false) {
   card.style.cssText =
     "background:#fffaf5;border:1px solid #eadbce;border-radius:14px;padding:16px;margin:12px 0;";
 
-  const title = makeElement("h3", "", recipe.title);
-  card.appendChild(title);
+const title = makeElement("h3", "", recipe.title);
+title.style.cssText = "font-family:'Dancing Script',cursive;font-size:36px;font-weight:700;line-height:1.3;color:#543b32;margin:0 0 14px;";
+card.appendChild(title);
 
   const details = makeElement(
     "p",
     "",
     `Prep: ${recipe.prep_time ?? "—"} min · Bake: ${recipe.bake_time ?? "—"} min`
   );
+  details.style.cssText =
+    "font-family:'Crimson Text',Georgia,serif;font-size:17px;line-height:1.7;color:#79675d;";
   card.appendChild(details);
-
   const visibility = makeElement(
     "p",
     "",
