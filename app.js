@@ -308,52 +308,6 @@ async function loadProfile(user, requestNumber) {
 }
 
 
-  panel.querySelector("h2").textContent = "Loading your profile...";
-  panel.querySelector("p").textContent = "Please wait.";
-  panel.querySelector("form").hidden = true;
-
-  try {
-    const { data, error } = await supabaseClient
-      .from("profiles")
-      .select("username")
-      .eq("id", user.id)
-      .maybeSingle();
-
-    if (requestNumber !== profileRequestNumber) return;
-    if (!currentUser || currentUser.id !== user.id) return;
-
-    if (error) throw error;
-
-    if (data) {
-      welcomeMessage.textContent =
-        "Welcome to BakeBook, @" + data.username + "!";
-
-      panel.replaceChildren();
-      const greeting = document.createElement("p");
-      greeting.textContent = "Your profile is ready.";
-      panel.appendChild(greeting);
-    } else {
-      panel.replaceChildren(createProfilePanel().firstChild);
-      const refreshedPanel = createProfilePanel();
-      panel.replaceChildren(...refreshedPanel.childNodes);
-      panel.querySelector("h2").textContent = "Choose your username";
-      panel.querySelector("p").textContent =
-        "Pick a unique username for your BakeBook profile.";
-      panel.querySelector("form").hidden = false;
-    }
-  } catch (error) {
-    if (requestNumber !== profileRequestNumber) return;
-
-    panel.replaceChildren();
-    const errorText = document.createElement("p");
-    errorText.textContent =
-      "Couldn't load your profile. Please refresh and try again.";
-    showMessage(errorText, errorText.textContent, true);
-    panel.appendChild(errorText);
-  }
-}
-
-function showSignedIn(user) {
   currentUser = user;
   const requestNumber = ++profileRequestNumber;
 
