@@ -157,7 +157,7 @@ function makeProfilePanel() {
 async function loadProfile(user, requestNumber) {
   if (!profilePanel) {
     profilePanel = document.createElement("div");
-    signedInSection.insertBefore(profilePanel, signoutButton);
+    signedInSection.prepend(profilePanel);
   }
 
   profilePanel.replaceChildren();
@@ -270,7 +270,6 @@ function makeRecipeCard(recipe, showOwnerActions = false) {
 async function getPhotoUrl(path) {
   if (!path) return null;
 
-  // Support an existing full URL as well as a stored Storage path.
   if (/^https?:\/\//i.test(path)) return path;
 
   const { data, error } = await supabaseClient.storage
@@ -477,7 +476,6 @@ async function deleteRecipe(recipe) {
 
     if (error) throw error;
 
-    // Remove the stored image only after the recipe row was deleted.
     if (recipe.photo_url && !/^https?:\/\//i.test(recipe.photo_url)) {
       const { error: photoError } = await supabaseClient.storage
         .from(BUCKET)
@@ -624,7 +622,6 @@ if (recipeForm) {
     } catch (error) {
       console.error("Saving recipe failed:", error);
 
-      // Avoid leaving an orphaned upload if the database write failed.
       if (uploadedPath) {
         const { error: cleanupError } = await supabaseClient.storage
           .from(BUCKET)
