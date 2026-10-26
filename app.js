@@ -783,3 +783,40 @@ supabaseClient.auth.onAuthStateChange((event, session) => {
 });
 
 restoreSession();
+$("change-password-form")?.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const newPassword = $("new-password").value;
+  const confirmPassword = $("confirm-password").value;
+  const message = $("password-message");
+
+  if (newPassword.length < 8) {
+    message.textContent = "Password must be at least 8 characters.";
+    return;
+  }
+
+  if (!/[a-z]/.test(newPassword) ||
+      !/[A-Z]/.test(newPassword) ||
+      !/[0-9]/.test(newPassword)) {
+    message.textContent = "Include an uppercase letter, lowercase letter, and number.";
+    return;
+  }
+
+  if (newPassword !== confirmPassword) {
+    message.textContent = "Your passwords don't match.";
+    return;
+  }
+
+  message.textContent = "Updating password...";
+
+  const { error } = await supabaseClient.auth.updateUser({
+    password: newPassword
+  });
+
+  if (error) {
+    message.textContent = error.message;
+  } else {
+    message.textContent = "Password updated successfully!";
+    $("change-password-form").reset();
+  }
+});
