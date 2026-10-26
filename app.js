@@ -365,12 +365,13 @@ const prepFilter = String($("prep-filter")?.value || "all");
     return matchesSearch && matchesVisibility && matchesPrep;
   });
 
-  if (sort === "oldest") {
-    recipes.reverse();
-  } else if (sort === "title") {
-    recipes.sort((a, b) => a.title.localeCompare(b.title));
-  }
-
+if (sort === "oldest") {
+  recipes.reverse();
+} else if (sort === "az") {
+  recipes.sort((a, b) => a.title.localeCompare(b.title));
+} else if (sort === "za") {
+  recipes.sort((a, b) => b.title.localeCompare(a.title));
+}
   if (!recipes.length) {
     showEmpty(list, currentRecipes.length
       ? "No recipes match those filters."
