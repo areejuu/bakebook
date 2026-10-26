@@ -438,12 +438,23 @@ function renderExploreRecipes(recipes) {
     (recipe.ingredients || "").toLowerCase().includes(search)
   );
 
-  if (sort === "oldest") {
-    results.reverse();
-  } else if (sort === "title") {
-    results.sort((a, b) => a.title.localeCompare(b.title));
-  }
-
+ if (sort === "oldest") {
+  results.sort((a, b) =>
+    new Date(a.created_at) - new Date(b.created_at)
+  );
+} else if (sort === "az") {
+  results.sort((a, b) =>
+    (a.title || "").localeCompare(b.title || "")
+  );
+} else if (sort === "za") {
+  results.sort((a, b) =>
+    (b.title || "").localeCompare(a.title || "")
+  );
+} else {
+  results.sort((a, b) =>
+    new Date(b.created_at) - new Date(a.created_at)
+  );
+}
   if (!results.length) {
     showEmpty(list, "No shared recipes found yet. Be the first to share one! ♡");
     return;
