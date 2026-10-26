@@ -470,6 +470,38 @@
         </div>
       </section>
     </section>
+    <section id="change-password-view" class="view">
+  <div class="section-head">
+    <div>
+      <div class="eyebrow">Account settings</div>
+      <h3>Change your password</h3>
+      <p>Choose a new password for your BakeBook account.</p>
+    </div>
+  </div>
+
+  <form id="change-password-form" class="recipe-form">
+    <label for="new-password">New password</label>
+    <input
+      id="new-password"
+      type="password"
+      minlength="8"
+      required
+      placeholder="At least 8 characters"
+    >
+
+    <label for="confirm-password">Confirm new password</label>
+    <input
+      id="confirm-password"
+      type="password"
+      minlength="8"
+      required
+      placeholder="Enter your new password again"
+    >
+
+    <button type="submit" class="primary-button">Update password ♡</button>
+    <p id="password-message" class="message" role="status"></p>
+  </form>
+</section>
 
     <footer class="footer">Made slowly, shared happily ♡ one recipe at a time.</footer>
   </div>
