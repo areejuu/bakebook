@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f7efe5">
   <title>BakeBook — Your little recipe journal</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
 
@@ -62,12 +63,15 @@
     }
 
     .masthead { text-align: center; padding: 25px 0 20px; }
+
     .brand {
       margin: 0;
       font: 500 clamp(42px, 7vw, 68px)/1.1 "Playfair Display", Georgia, serif;
       letter-spacing: -2px;
     }
+
     .brand span { color: var(--pink); font-style: italic; }
+
     .tagline {
       margin: 8px 0 0;
       font: italic 14px "Playfair Display", Georgia, serif;
@@ -86,6 +90,7 @@
     }
 
     .intro { padding: 20px 0; }
+
     .eyebrow {
       color: var(--pink);
       font-size: 10px;
@@ -94,13 +99,40 @@
       text-transform: uppercase;
     }
 
-    h2, h3, h4 { font-family: "Playfair Display", Georgia, serif; font-weight: 500; }
-    .intro h2 { font-size: clamp(34px, 4vw, 48px); line-height: 1.2; margin: 13px 0; }
-    .intro h2 em { color: var(--pink); }
-    .intro p { max-width: 390px; color: var(--muted); font-size: 13px; line-height: 1.9; }
+    h2, h3, h4 {
+      font-family: "Playfair Display", Georgia, serif;
+      font-weight: 500;
+    }
 
-    .intro-list { list-style: none; padding: 0; margin-top: 25px; display: grid; gap: 12px; font-size: 12px; }
-    .intro-list li::before { content: "✿"; color: var(--pink); margin-right: 10px; }
+    .intro h2 {
+      font-size: clamp(34px, 4vw, 48px);
+      line-height: 1.2;
+      margin: 13px 0;
+    }
+
+    .intro h2 em { color: var(--pink); }
+
+    .intro p {
+      max-width: 390px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.9;
+    }
+
+    .intro-list {
+      list-style: none;
+      padding: 0;
+      margin-top: 25px;
+      display: grid;
+      gap: 12px;
+      font-size: 12px;
+    }
+
+    .intro-list li::before {
+      content: "✿";
+      color: var(--pink);
+      margin-right: 10px;
+    }
 
     .paper {
       background: var(--white);
@@ -123,12 +155,31 @@
     .paper h2 { text-align: center; font-size: 28px; margin: 7px 0; }
     .paper-note { text-align: center; color: var(--muted); font-size: 11px; margin: 0 0 20px; }
 
-    .auth-tabs { display: flex; border-bottom: 1px solid var(--line); margin-bottom: 20px; }
-    .auth-tabs button { flex: 1; padding: 11px 5px; background: transparent; border: 0; color: var(--muted); font-size: 12px; }
-    .auth-tabs button.active { border-bottom: 2px solid var(--pink); color: var(--ink); font-weight: 700; }
+    .auth-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 20px;
+    }
+
+    .auth-tabs button {
+      flex: 1;
+      padding: 11px 5px;
+      background: transparent;
+      border: 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .auth-tabs button.active {
+      border-bottom: 2px solid var(--pink);
+      color: var(--ink);
+      font-weight: 700;
+    }
 
     .field { margin-bottom: 15px; min-width: 0; }
+
     .field label { display: block; margin-bottom: 7px; font-size: 11px; }
+
     .field input, .field textarea, .field select, .search-input {
       width: 100%;
       min-width: 0;
@@ -141,7 +192,9 @@
     }
 
     .field textarea { resize: vertical; line-height: 1.7; }
-    .field input::placeholder, .field textarea::placeholder { color: #b5a59a; }
+
+    .field input::placeholder,
+    .field textarea::placeholder { color: #b5a59a; }
 
     .primary {
       border: 0;
@@ -152,14 +205,28 @@
       letter-spacing: .7px;
       transition: background .2s;
     }
+
     .primary:hover { background: #a46673; }
+    .primary:disabled { opacity: .6; cursor: wait; }
     .full { width: 100%; }
 
-    .message { color: var(--green); font-size: 12px; line-height: 1.6; overflow-wrap: anywhere; }
-    .message:empty { display: none; }
-    .small-note { text-align: center; font: italic 12px "Playfair Display", Georgia, serif; color: var(--muted); margin: 18px 0 0; }
+    .message {
+      color: var(--green);
+      font-size: 12px;
+      line-height: 1.6;
+      overflow-wrap: anywhere;
+    }
 
-    /* Signed-in homepage */
+    .message:empty { display: none; }
+
+    .small-note {
+      text-align: center;
+      font: italic 12px "Playfair Display", Georgia, serif;
+      color: var(--muted);
+      margin: 18px 0 0;
+    }
+
+    /* Homepage */
 
     .home-welcome {
       display: flex;
@@ -184,11 +251,24 @@
     }
 
     .welcome-copy { position: relative; z-index: 1; }
-    .welcome-copy h2 { font-size: clamp(32px, 4vw, 46px); line-height: 1.15; margin: 12px 0; }
+
+    .welcome-copy h2 {
+      font-size: clamp(32px, 4vw, 46px);
+      line-height: 1.15;
+      margin: 12px 0;
+    }
+
     .welcome-copy h2 em { color: #a66674; }
-    .welcome-copy p { max-width: 490px; color: #776259; font-size: 12px; line-height: 1.9; }
+
+    .welcome-copy p {
+      max-width: 490px;
+      color: #776259;
+      font-size: 12px;
+      line-height: 1.9;
+    }
 
     .welcome-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
+
     .secondary {
       border: 1px solid #d2b6ae;
       background: #fff8f0;
@@ -197,9 +277,21 @@
       font-size: 11px;
     }
 
-    .welcome-decoration { flex: 0 0 145px; text-align: center; font-size: 88px; color: var(--pink); transform: rotate(-8deg); }
+    .welcome-decoration {
+      flex: 0 0 145px;
+      text-align: center;
+      font-size: 88px;
+      color: var(--pink);
+      transform: rotate(-8deg);
+    }
 
-    .home-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 0 0 28px; }
+    .home-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin: 0 0 28px;
+    }
+
     .home-tile {
       display: flex;
       align-items: center;
@@ -213,23 +305,78 @@
       color: var(--ink);
       transition: transform .2s, border-color .2s;
     }
+
     .home-tile:hover { transform: translateY(-2px); border-color: var(--pink); }
-    .tile-icon { display: grid; place-items: center; flex: 0 0 48px; height: 48px; background: var(--pink-pale); border-radius: 50%; color: #a66674; font-size: 23px; }
+
+    .tile-icon {
+      display: grid;
+      place-items: center;
+      flex: 0 0 48px;
+      height: 48px;
+      background: var(--pink-pale);
+      border-radius: 50%;
+      color: #a66674;
+      font-size: 23px;
+    }
+
     .tile-copy { flex: 1; }
-    .tile-copy strong { display: block; font: 500 21px "Playfair Display", Georgia, serif; }
-    .tile-copy small { display: block; margin-top: 6px; color: var(--muted); font-size: 11px; line-height: 1.5; }
+
+    .tile-copy strong {
+      display: block;
+      font: 500 21px "Playfair Display", Georgia, serif;
+    }
+
+    .tile-copy small {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
     .tile-arrow { color: var(--pink); }
 
-    .section-head { display: flex; justify-content: space-between; align-items: end; gap: 12px; margin-bottom: 15px; }
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 12px;
+      margin-bottom: 15px;
+    }
+
     .section-head h3 { margin: 0; font-size: 27px; }
+
     .section-head p { color: var(--muted); font-size: 11px; margin: 6px 0 0; }
-    .text-button { border: 0; background: transparent; color: #a66674; font-size: 11px; padding: 8px 0; }
 
-    .preview-panel { padding: 22px; border: 1px solid var(--line); background: #fffaf3b8; margin-bottom: 26px; }
-    .preview-placeholder { text-align: center; padding: 25px 12px; color: var(--muted); font: italic 15px/1.8 "Playfair Display", Georgia, serif; }
-    .preview-placeholder span { display: block; color: var(--pink); font-size: 26px; }
+    .text-button {
+      border: 0;
+      background: transparent;
+      color: #a66674;
+      font-size: 11px;
+      padding: 8px 0;
+    }
 
-    /* App views */
+    .preview-panel {
+      padding: 22px;
+      border: 1px solid var(--line);
+      background: #fffaf3b8;
+      margin-bottom: 26px;
+    }
+
+    .preview-placeholder {
+      text-align: center;
+      padding: 25px 12px;
+      color: var(--muted);
+      font: italic 15px/1.8 "Playfair Display", Georgia, serif;
+    }
+
+    .preview-placeholder span {
+      display: block;
+      color: var(--pink);
+      font-size: 26px;
+    }
+
+    /* Navigation and pages */
 
     .app-nav {
       display: flex;
@@ -241,48 +388,137 @@
       border-top: 1px solid var(--line);
       border-bottom: 1px solid var(--line);
     }
-    .nav-button { border: 0; background: transparent; color: var(--muted); padding: 10px 13px; font-size: 11px; }
-    .nav-button.active, .nav-button:hover { color: #a66674; background: #f0dfe0a8; }
+
+    .nav-button {
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      padding: 10px 13px;
+      font-size: 11px;
+    }
+
+    .nav-button.active,
+    .nav-button:hover {
+      color: #a66674;
+      background: #f0dfe0a8;
+    }
+
     .nav-spacer { flex: 1; }
-    .signout-button { background: transparent; border: 1px solid var(--line); color: var(--muted); padding: 9px 12px; font-size: 11px; }
+
+    .signout-button {
+      background: transparent;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      padding: 9px 12px;
+      font-size: 11px;
+    }
 
     .view { display: none; }
     .view.active { display: block; }
 
-    .form-paper { background: #fffaf3d9; border: 1px solid var(--line); padding: 24px; }
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .hint { color: var(--muted); font-size: 11px; line-height: 1.7; }
-    .filter-bar { display: grid; grid-template-columns: minmax(160px, 1fr) repeat(3, minmax(110px, 160px)); gap: 9px; margin: 18px 0; }
-    .filter-bar input, .filter-bar select { width: 100%; border: 1px solid var(--line); background: var(--white); padding: 11px; color: var(--ink); font-size: 11px; }
-    .recipe-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 15px; }
-    .empty-note { grid-column: 1 / -1; border: 1px dashed #d8c4ad; padding: 30px 15px; text-align: center; color: var(--muted); font: italic 15px/1.8 "Playfair Display", Georgia, serif; }
-    .empty-note span { display: block; color: var(--pink); font-size: 26px; }
+    .form-paper {
+      background: #fffaf3d9;
+      border: 1px solid var(--line);
+      padding: 24px;
+    }
 
-    .footer { text-align: center; border-top: 1px solid var(--line); padding-top: 24px; margin-top: 38px; color: var(--muted); font: italic 13px "Playfair Display", Georgia, serif; }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .hint { color: var(--muted); font-size: 11px; line-height: 1.7; }
+
+    .filter-bar {
+      display: grid;
+      grid-template-columns: minmax(160px, 1fr) repeat(3, minmax(110px, 160px));
+      gap: 9px;
+      margin: 18px 0;
+    }
+
+    .filter-bar input,
+    .filter-bar select {
+      width: 100%;
+      min-width: 0;
+      border: 1px solid var(--line);
+      background: var(--white);
+      padding: 11px;
+      color: var(--ink);
+      font-size: 11px;
+    }
+
+    .recipe-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 15px;
+    }
+
+    .empty-note {
+      grid-column: 1 / -1;
+      border: 1px dashed #d8c4ad;
+      padding: 30px 15px;
+      text-align: center;
+      color: var(--muted);
+      font: italic 15px/1.8 "Playfair Display", Georgia, serif;
+    }
+
+    .empty-note span {
+      display: block;
+      color: var(--pink);
+      font-size: 26px;
+    }
+
+    .footer {
+      text-align: center;
+      border-top: 1px solid var(--line);
+      padding-top: 24px;
+      margin-top: 38px;
+      color: var(--muted);
+      font: italic 13px "Playfair Display", Georgia, serif;
+    }
 
     @media (max-width: 760px) {
       .shell { padding: 16px 17px 30px; }
-      .auth-layout { grid-template-columns: 1fr; gap: 18px; max-width: 450px; }
+
+      .auth-layout {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        max-width: 450px;
+      }
+
       .intro { text-align: center; padding: 0; }
+
       .intro p { margin-left: auto; margin-right: auto; }
-      .intro-list { text-align: left; max-width: 290px; margin-left: auto; margin-right: auto; }
+
+      .intro-list {
+        text-align: left;
+        max-width: 290px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
       .welcome-decoration { display: none; }
       .home-welcome { padding: 25px 20px; }
+
       .filter-bar { grid-template-columns: 1fr 1fr; }
+
       .recipe-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
     @media (max-width: 460px) {
       .topline { font-size: 8px; letter-spacing: .7px; }
       .paper { padding: 25px 20px; }
+
       .home-grid, .form-grid, .recipe-list { grid-template-columns: 1fr; }
+
       .home-tile { min-height: 85px; }
       .section-head h3 { font-size: 23px; }
       .nav-spacer { display: none; }
       .filter-bar { grid-template-columns: 1fr; }
       .app-nav { gap: 2px; }
       .nav-button { padding: 9px 8px; }
-  @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=Dancing+Script:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+    }
   </style>
 </head>
 
@@ -297,8 +533,10 @@
       <h1 class="brand">BakeBook<span>Recipes</span></h1>
       <p class="tagline">A little book of lovely things.</p>
     </header>
+
     <div class="ornament" aria-hidden="true">— ✿ ❧ ✿ —</div>
 
+    <!-- Sign in and create account -->
     <section id="auth-section">
       <div class="auth-layout">
         <div class="intro">
@@ -326,19 +564,24 @@
               <label for="email">Email address</label>
               <input id="email" type="email" placeholder="you@example.com" autocomplete="email" required>
             </div>
+
             <div class="field">
               <label for="password">Password</label>
               <input id="password" type="password" placeholder="At least 8 characters" autocomplete="current-password" required>
             </div>
+
             <p id="password-help" class="hint hidden">Use at least 8 characters, including an uppercase letter, a lowercase letter and a number.</p>
+
             <button type="submit" id="submit-button" class="primary full">Open my journal ♡</button>
             <p id="auth-message" class="message" role="status" aria-live="polite"></p>
           </form>
+
           <p class="small-note">There's always room for one more recipe.</p>
         </div>
       </div>
     </section>
 
+    <!-- All signed-in pages must remain inside this section -->
     <section id="signed-in-section" class="hidden">
       <nav class="app-nav" aria-label="Main navigation">
         <button type="button" class="nav-button active" data-view="home-view">⌂ Home</button>
@@ -352,12 +595,14 @@
 
       <p id="session-message" class="message" role="status" aria-live="polite"></p>
 
+      <!-- Home -->
       <div id="home-view" class="view active">
         <section class="home-welcome">
           <div class="welcome-copy">
             <div class="eyebrow">Welcome to your kitchen</div>
             <h2 id="welcome-heading">Your kitchen,<br>your <em>stories.</em></h2>
             <p id="welcome-message">Your personal recipe journal, all in one place.</p>
+
             <div class="welcome-actions">
               <button type="button" class="primary" data-view="add-recipe-view">＋ Add a recipe</button>
               <button type="button" class="secondary" data-view="my-recipes-view">Browse my recipes →</button>
@@ -369,47 +614,84 @@
         <div class="home-grid">
           <button type="button" class="home-tile" data-view="my-recipes-view">
             <span class="tile-icon">♡</span>
-            <span class="tile-copy"><strong>My recipes</strong><small>Your own collection of tried-and-loved recipes.</small></span>
+            <span class="tile-copy">
+              <strong>My recipes</strong>
+              <small>Your own collection of tried-and-loved recipes.</small>
+            </span>
             <span class="tile-arrow">↗</span>
           </button>
+
           <button type="button" class="home-tile" data-view="explore-view">
             <span class="tile-icon">✿</span>
-            <span class="tile-copy"><strong>Explore</strong><small>Discover recipes shared by other bakers.</small></span>
+            <span class="tile-copy">
+              <strong>Explore</strong>
+              <small>Discover recipes shared by other bakers.</small>
+            </span>
             <span class="tile-arrow">↗</span>
           </button>
         </div>
 
         <section>
           <div class="section-head">
-            <div><h3>Recently collected</h3><p>Your latest additions, all together.</p></div>
+            <div>
+              <h3>Recently collected</h3>
+              <p>Your latest additions, all together.</p>
+            </div>
             <button type="button" class="text-button" data-view="my-recipes-view">View all →</button>
           </div>
+
           <div id="home-recipe-list" class="preview-panel">
-            <div class="preview-placeholder"><span>♡</span>Your recipe pages will appear here once you save your first recipe.</div>
+            <div class="preview-placeholder">
+              <span>♡</span>
+              Your recipe pages will appear here once you save your first recipe.
+            </div>
           </div>
         </section>
       </div>
 
+      <!-- Add recipe -->
       <section id="add-recipe-view" class="view">
         <div class="section-head">
-          <div><div class="eyebrow">A fresh page</div><h3>Add a recipe</h3><p>Keep the ingredients and little details you'll want to remember.</p></div>
+          <div>
+            <div class="eyebrow">A fresh page</div>
+            <h3>Add a recipe</h3>
+            <p>Keep the ingredients and little details you'll want to remember.</p>
+          </div>
         </div>
+
         <form id="recipe-form" class="form-paper">
           <div class="field">
             <label for="recipe-title">Recipe name</label>
             <input id="recipe-title" type="text" placeholder="Your favourite chocolate cake…" required>
           </div>
+
           <div class="form-grid">
-            <div class="field"><label for="prep-time">Prep time (minutes)</label><input id="prep-time" type="number" min="0" placeholder="20"></div>
-            <div class="field"><label for="bake-time">Bake time (minutes)</label><input id="bake-time" type="number" min="0" placeholder="35"></div>
+            <div class="field">
+              <label for="prep-time">Prep time (minutes)</label>
+              <input id="prep-time" type="number" min="0" placeholder="20">
+            </div>
+            <div class="field">
+              <label for="bake-time">Bake time (minutes)</label>
+              <input id="bake-time" type="number" min="0" placeholder="35">
+            </div>
           </div>
-          <div class="field"><label for="ingredients">Ingredients</label><textarea id="ingredients" rows="5" placeholder="One ingredient per line…" required></textarea></div>
-          <div class="field"><label for="instructions">Instructions</label><textarea id="instructions" rows="6" placeholder="Write each step in order…" required></textarea></div>
+
+          <div class="field">
+            <label for="ingredients">Ingredients</label>
+            <textarea id="ingredients" rows="5" placeholder="One ingredient per line…" required></textarea>
+          </div>
+
+          <div class="field">
+            <label for="instructions">Instructions</label>
+            <textarea id="instructions" rows="6" placeholder="Write each step in order…" required></textarea>
+          </div>
+
           <div class="field">
             <label for="recipe-photo">Photo of your bake (optional)</label>
             <input id="recipe-photo" type="file" accept="image/jpeg,image/png,image/webp">
             <p class="hint">JPG, PNG or WEBP · Maximum 5 MB</p>
           </div>
+
           <div class="field">
             <label for="recipe-visibility">Who can see this recipe?</label>
             <select id="recipe-visibility">
@@ -418,28 +700,38 @@
             </select>
             <p class="hint">Your recipes stay private unless you choose to share them.</p>
           </div>
+
           <button type="submit" id="save-recipe-button" class="primary">Save to my book ♡</button>
           <p id="recipe-message" class="message" role="status" aria-live="polite"></p>
         </form>
       </section>
 
+      <!-- My recipes -->
       <section id="my-recipes-view" class="view">
         <div class="section-head">
-          <div><div class="eyebrow">Collected with love</div><h3>My recipes</h3><p>Search, sort and filter your personal collection.</p></div>
+          <div>
+            <div class="eyebrow">Collected with love</div>
+            <h3>My recipes</h3>
+            <p>Search, sort and filter your personal collection.</p>
+          </div>
         </div>
+
         <div class="filter-bar">
           <input id="recipe-search" type="search" placeholder="Search names or ingredients…" aria-label="Search recipes">
+
           <select id="visibility-filter" aria-label="Filter by visibility">
             <option value="all">All recipes</option>
             <option value="private">Private only</option>
             <option value="public">Public only</option>
           </select>
+
           <select id="recipe-sort" aria-label="Sort recipes">
             <option value="newest">Newest first</option>
             <option value="oldest">Oldest first</option>
             <option value="az">Name A–Z</option>
             <option value="za">Name Z–A</option>
           </select>
+
           <select id="prep-filter" aria-label="Filter by preparation time">
             <option value="all">Any prep time</option>
             <option value="15">15 min or less</option>
@@ -447,61 +739,82 @@
             <option value="60">60 min or less</option>
           </select>
         </div>
+
         <div id="recipe-list" class="recipe-list">
           <div class="empty-note"><span>♡</span>Your recipe pages will appear here.</div>
         </div>
       </section>
 
+      <!-- Explore public recipes -->
       <section id="explore-view" class="view">
         <div class="section-head">
-          <div><div class="eyebrow">A shared table</div><h3>From other kitchens</h3><p>Discover something lovely from the BakeBook community.</p></div>
+          <div>
+            <div class="eyebrow">A little inspiration</div>
+            <h3>Explore recipes</h3>
+            <p>Discover recipes that other bakers have chosen to share.</p>
+          </div>
         </div>
+
         <div class="filter-bar">
-          <input id="public-recipe-search" type="search" placeholder="Search community recipes…" aria-label="Search community recipes">
-         <select id="public-recipe-sort" aria-label="Sort community recipes">
-  <option value="newest">Newest first</option>
-  <option value="oldest">Oldest first</option>
-  <option value="az">Name A–Z</option>
-  <option value="za">Name Z–A</option>
-</select>
+          <input id="explore-search" type="search" placeholder="Search public recipes…" aria-label="Search public recipes">
+
+          <select id="explore-sort" aria-label="Sort public recipes">
+            <option value="newest">Newest first</option>
+            <option value="oldest">Oldest first</option>
+            <option value="az">Name A–Z</option>
+            <option value="za">Name Z–A</option>
+          </select>
         </div>
-        <div id="public-recipe-list" class="recipe-list">
-          <div class="empty-note"><span>✿</span>Public recipes shared by other bakers will appear here.</div>
+
+        <div id="explore-list" class="recipe-list">
+          <div class="empty-note"><span>✿</span>Shared recipes will appear here.</div>
         </div>
+
+        <p id="explore-message" class="message" role="status" aria-live="polite"></p>
+      </section>
+
+      <!-- Change password -->
+      <section id="change-password-view" class="view">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Account settings</div>
+            <h3>Change your password</h3>
+            <p>Choose a new password for your BakeBook account.</p>
+          </div>
+        </div>
+
+        <form id="change-password-form" class="form-paper">
+          <div class="field">
+            <label for="new-password">New password</label>
+            <input
+              id="new-password"
+              type="password"
+              minlength="8"
+              autocomplete="new-password"
+              placeholder="At least 8 characters"
+              required
+            >
+          </div>
+
+          <div class="field">
+            <label for="confirm-password">Confirm new password</label>
+            <input
+              id="confirm-password"
+              type="password"
+              minlength="8"
+              autocomplete="new-password"
+              placeholder="Enter your new password again"
+              required
+            >
+          </div>
+
+          <p class="hint">Use at least 8 characters, including an uppercase letter, a lowercase letter and a number.</p>
+
+          <button type="submit" id="update-password-button" class="primary">Update password ♡</button>
+          <p id="password-message" class="message" role="status" aria-live="polite"></p>
+        </form>
       </section>
     </section>
-    <section id="change-password-view" class="view">
-  <div class="section-head">
-    <div>
-      <div class="eyebrow">Account settings</div>
-      <h3>Change your password</h3>
-      <p>Choose a new password for your BakeBook account.</p>
-    </div>
-  </div>
-
-  <form id="change-password-form" class="recipe-form">
-    <label for="new-password">New password</label>
-    <input
-      id="new-password"
-      type="password"
-      minlength="8"
-      required
-      placeholder="At least 8 characters"
-    >
-
-    <label for="confirm-password">Confirm new password</label>
-    <input
-      id="confirm-password"
-      type="password"
-      minlength="8"
-      required
-      placeholder="Enter your new password again"
-    >
-
-    <button type="submit" class="primary-button">Update password ♡</button>
-    <p id="password-message" class="message" role="status"></p>
-  </form>
-</section>
 
     <footer class="footer">Made slowly, shared happily ♡ one recipe at a time.</footer>
   </div>
@@ -509,24 +822,29 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="config.js"></script>
   <script src="app.js"></script>
+
   <script>
-    // Navigation between the homepage and the journal sections.
+    // Navigate between pages inside the signed-in area.
     document.addEventListener("click", function (event) {
       const button = event.target.closest("[data-view]");
       if (!button) return;
 
       const targetId = button.getAttribute("data-view");
-      const target = document.getElementById(targetId);
       const signedIn = document.getElementById("signed-in-section");
+      if (!signedIn || signedIn.classList.contains("hidden")) return;
 
-      if (!target || !signedIn || signedIn.classList.contains("hidden")) return;
+      const target = document.getElementById(targetId);
+      if (!target || !signedIn.contains(target)) return;
 
       signedIn.querySelectorAll(".view").forEach(function (view) {
         view.classList.toggle("active", view.id === targetId);
       });
 
-      signedIn.querySelectorAll(".nav-button").forEach(function (navButton) {
-        navButton.classList.toggle("active", navButton.getAttribute("data-view") === targetId);
+      signedIn.querySelectorAll(".nav-button[data-view]").forEach(function (navButton) {
+        navButton.classList.toggle(
+          "active",
+          navButton.getAttribute("data-view") === targetId
+        );
       });
 
       window.scrollTo({ top: 0, behavior: "smooth" });
